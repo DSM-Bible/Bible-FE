@@ -1,5 +1,4 @@
 import { QueryClientProvider, QueryClient } from "react-query";
-import "./Styles/index.css";
 import Router from "./Router";
 
 function App() {
@@ -7,7 +6,6 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      
       <Router />;
     </QueryClientProvider>
   );
