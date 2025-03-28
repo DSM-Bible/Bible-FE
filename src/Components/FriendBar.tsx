@@ -1,12 +1,12 @@
 import { css } from "@emotion/react";
-import ProfileImg from "../Assets/Profile.svg";
+import FriendImg from "../Assets/img/SVG/Friend.svg";
 import { Font } from "../Styles/Font";
 import { Color } from "../Styles/Color";
 
-export const Profile = () => {
+export const FriendBar = () => {
   return (
     <div css={Container}>
-      <img src={ProfileImg} alt="" />
+      <img src={FriendImg} alt="" />
       <div>
         <Font text="UserName" kind="bodyText1" color="defaultBlack" />
         <Font text="UserId" kind="bodyText2" color="disableGray" />
