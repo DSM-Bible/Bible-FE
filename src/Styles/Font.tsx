@@ -13,49 +13,59 @@ export const Font = ({
   color = "defaultBlack",
 }: FontPropsType) => {
   const StyledFont = fonts[kind] || fonts[""];
-  return <StyledFont color={color}>{text}</StyledFont>;
+  return <StyledFont color={Color[color]}>{text}</StyledFont>;
 };
 
 const fonts = {
   "": styled.p``,
-  header: styled.p`
+  header: styled.p<{ color: string }>`
     font-size: 25px;
     font-weight: 600;
+    color: ${({ color }) => color};
   `,
-  headLine1: styled.p`
+  headLine1: styled.p<{ color: string }>`
     font-size: 25px;
     font-weight: 600;
+    color: ${({ color }) => color};
   `,
-  headLine2: styled.p`
+  headLine2: styled.p<{ color: string }>`
     font-size: 20px;
     font-weight: 600;
+    color: ${({ color }) => color};
   `,
-  bodyTItle: styled.p`
+  bodyTItle: styled.p<{ color: string }>`
     font-size: 18px;
     font-weight: 600;
+    color: ${({ color }) => color};
   `,
-  bodyText1: styled.p`
+  bodyText1: styled.p<{ color: string }>`
     font-size: 15px;
     font-weight: 500;
+    color: ${({ color }) => color};
   `,
-  bodyText2: styled.p`
+  bodyText2: styled.p<{ color: string }>`
     font-size: 12px;
     font-weight: 400;
+    color: ${({ color }) => color};
   `,
-  bodyText3: styled.p`
+  bodyText3: styled.p<{ color: string }>`
     font-size: 10px;
     font-weight: 400;
+    color: ${({ color }) => color};
   `,
-  description: styled.p`
+  description: styled.p<{ color: string }>`
     font-size: 14px;
     font-weight: 400;
+    color: ${({ color }) => color};
   `,
-  btnText: styled.p`
+  btnText: styled.p<{ color: string }>`
     font-size: 20px;
     font-weight: 500;
+    color: ${({ color }) => color};
   `,
-  modalText: styled.p`
+  modalText: styled.p<{ color: string }>`
     font-size: 18px;
     font-weight: 400;
+    color: ${({ color }) => color};
   `,
 };
