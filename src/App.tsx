@@ -1,4 +1,4 @@
-import { QueryClientProvider, QueryClient } from "react-query";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Router from "./Router";
 import GlobalStyle from "./Styles/GlobalStyles";
 
@@ -8,7 +8,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <GlobalStyle />
-      <Router />;
+      <Router />
     </QueryClientProvider>
   );
 }

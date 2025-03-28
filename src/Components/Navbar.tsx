@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 import calender from "../Assets/img/SVG/calender.svg";
 import routine from "../Assets/img/SVG/routine.svg";
 import home from "../Assets/img/SVG/home.svg";
@@ -16,31 +16,31 @@ const Menus = [
 
 export const Navbar = () => {
   return (
-    <Container>
+    <div css={containerStyle}>
       {Menus.map((element, index) => (
-        <Menu key={index}>
-          <Icon src={element.icon} />
+        <div key={index} css={menuStyle}>
+          <img src={element.icon} css={iconStyle} />
           <Font text={element.name} kind="description" color="disableGray" />
-        </Menu>
+        </div>
       ))}
-    </Container>
+    </div>
   );
 };
 
-const Container = styled.div`
+const containerStyle = css`
   width: 100%;
   display: flex;
   justify-content: space-around;
 `;
 
-const Menu = styled.div`
+const menuStyle = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
-const Icon = styled.img`
+const iconStyle = css`
   width: 28px;
   height: 28px;
 `;

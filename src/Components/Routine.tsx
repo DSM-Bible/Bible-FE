@@ -1,22 +1,22 @@
-import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 import { Font } from "../Styles/Font";
 import { Color } from "../Styles/Color";
 
 export const Routine = () => {
   return (
-    <Container>
+    <div css={containerStyle}>
       <Font text="루틴이름꺄를ㄺ" kind="headLine2" color="basicTextColor" />
-      <Wrapper>
+      <div css={wrapperStyle}>
         <Font text="12:00 ~ 13:30" kind="bodyText1" color="basicTextColor" />
-        <StartButton>
+        <div css={startButtonStyle}>
           <Font text="시작" kind="bodyText1" color="basicTextColor" />
-        </StartButton>
-      </Wrapper>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export const Container = styled.div`
+const containerStyle = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,12 +28,12 @@ export const Container = styled.div`
   padding: 0px 24px;
 `;
 
-export const Wrapper = styled.div`
+const wrapperStyle = css`
   display: flex;
   justify-content: space-between;
 `;
 
-export const StartButton = styled.div`
+const startButtonStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;

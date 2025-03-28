@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 import { Font } from "../Styles/Font";
 import { Color } from "../Styles/Color";
 
@@ -8,13 +8,13 @@ interface ButtonPropType {
 
 export const Button = ({ text }: ButtonPropType) => {
   return (
-    <Container>
+    <div css={Container}>
       <Font text={text} kind="btnText" color="defaultWhite" />
-    </Container>
+    </div>
   );
 };
 
-export const Container = styled.div`
+const Container = css`
   display: flex;
   justify-content: center;
   align-items: center;
