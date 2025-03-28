@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 import { Color } from "./Color";
 
 interface FontPropsType {
@@ -12,60 +12,53 @@ export const Font = ({
   kind = "",
   color = "defaultBlack",
 }: FontPropsType) => {
-  const StyledFont = fonts[kind] || fonts[""];
-  return <StyledFont color={Color[color]}>{text}</StyledFont>;
+  return (
+    <p css={fonts[kind] || fonts[""]} style={{ color: Color[color] }}>
+      {text}
+    </p>
+  );
 };
 
 const fonts = {
-  "": styled.p``,
-  header: styled.p<{ color: string }>`
+  "": css``,
+  header: css`
     font-size: 25px;
     font-weight: 600;
-    color: ${({ color }) => color};
   `,
-  headLine1: styled.p<{ color: string }>`
+  headLine1: css`
     font-size: 25px;
     font-weight: 600;
-    color: ${({ color }) => color};
   `,
-  headLine2: styled.p<{ color: string }>`
+  headLine2: css`
     font-size: 20px;
     font-weight: 600;
-    color: ${({ color }) => color};
   `,
-  bodyTItle: styled.p<{ color: string }>`
+  bodyTItle: css`
     font-size: 18px;
     font-weight: 600;
-    color: ${({ color }) => color};
   `,
-  bodyText1: styled.p<{ color: string }>`
+  bodyText1: css`
     font-size: 15px;
     font-weight: 500;
-    color: ${({ color }) => color};
   `,
-  bodyText2: styled.p<{ color: string }>`
+  bodyText2: css`
     font-size: 12px;
     font-weight: 400;
-    color: ${({ color }) => color};
   `,
-  bodyText3: styled.p<{ color: string }>`
+  bodyText3: css`
     font-size: 10px;
     font-weight: 400;
-    color: ${({ color }) => color};
   `,
-  description: styled.p<{ color: string }>`
+  description: css`
     font-size: 14px;
     font-weight: 400;
-    color: ${({ color }) => color};
   `,
-  btnText: styled.p<{ color: string }>`
+  btnText: css`
     font-size: 20px;
     font-weight: 500;
-    color: ${({ color }) => color};
   `,
-  modalText: styled.p<{ color: string }>`
+  modalText: css`
     font-size: 18px;
     font-weight: 400;
-    color: ${({ color }) => color};
   `,
 };
