@@ -1,11 +1,11 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import { MyRoutine } from "./Components/MyRoutine";
+import { ContentInput } from "./Components/ContentInput";
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MyRoutine />} />
+        <Route path="/" element={<ContentInput />} />
       </Routes>
     </BrowserRouter>
   );
