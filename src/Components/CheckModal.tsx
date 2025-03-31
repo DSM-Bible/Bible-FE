@@ -2,22 +2,38 @@ import { css } from "@emotion/react";
 import { Font } from "../Styles/Font";
 import { Color } from "../Styles/Color";
 
-export const CheckModal = () => {
+interface CheckModalPropsType {
+  title: string;
+  content1?: string;
+  content2?: string;
+  placeholder?: string;
+}
+
+export const CheckModal = ({
+  title,
+  content1,
+  content2,
+  placeholder,
+}: CheckModalPropsType) => {
   return (
     <div css={Container}>
       <div css={TextWrapper}>
-        <Font text="친구 삭제" kind="headLine1" color="basicTextColor" />
+        <Font text={title} kind="headLine1" color="basicTextColor" />
         <div css={Content}>
-          <Font
-            text="8자딱맞춘닉넴님"
-            kind="modalText"
-            color="basicTextColor"
-          />
-          <Font
-            text="위 친구를 친구삭제 하시겠습니까?"
-            kind="modalText"
-            color="basicTextColor"
-          />
+          {[content1, content2].map(
+            (content, index) =>
+              content && (
+                <Font
+                  key={index}
+                  text={content}
+                  kind="modalText"
+                  color="basicTextColor"
+                />
+              )
+          )}
+          {!content1 && !content2 && (
+            <input css={Input} type="text" placeholder={placeholder} />
+          )}
         </div>
       </div>
       <div css={ButtonWrapper}>
@@ -41,7 +57,6 @@ const Container = css`
   height: 200px;
   background-color: ${Color.defaultWhite};
   border-radius: 20px;
-  border: 1px solid;
 `;
 
 const TextWrapper = css`
@@ -56,6 +71,19 @@ const Content = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const Input = css`
+  width: 256px;
+  height: 8px;
+  border: 1px solid #a7a7a7;
+  border-radius: 8px;
+  padding: 12px 16px;
+
+  &:focus {
+    border: 1px solid ${Color.mainColor};
+    outline: none;
+  }
 `;
 
 const ButtonWrapper = css`
