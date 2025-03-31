@@ -16,10 +16,10 @@ const Menus = [
 
 export const Navbar = () => {
   return (
-    <div css={containerStyle}>
+    <div css={Container}>
       {Menus.map((element, index) => (
-        <div key={index} css={menuStyle}>
-          <img src={element.icon} css={iconStyle} />
+        <div key={index} css={Menu}>
+          <img src={element.icon} css={Icon} />
           <Font text={element.name} kind="description" color="disableGray" />
         </div>
       ))}
@@ -27,20 +27,20 @@ export const Navbar = () => {
   );
 };
 
-const containerStyle = css`
+const Container = css`
   width: 100%;
   display: flex;
   justify-content: space-around;
 `;
 
-const menuStyle = css`
+const Menu = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
-const iconStyle = css`
+const Icon = css`
   width: 28px;
   height: 28px;
 `;

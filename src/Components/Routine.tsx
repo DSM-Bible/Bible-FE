@@ -11,20 +11,20 @@ export const Routine = () => {
     setIsCheck((prev) => !prev);
   };
   return (
-    <div css={container}>
-      <div css={headerWrapper}>
+    <div css={Container}>
+      <div css={HeaderWrapper}>
         <Font text="루틴이름꺄를ㄺ" kind="headLine2" color="basicTextColor" />
-        <div css={checkBox(isCheck)} onClick={toggleCheck}>
+        <div css={CheckBox(isCheck)} onClick={toggleCheck}>
           {isCheck && <img src={check} />}
         </div>
       </div>
-      <div css={contentWrapper}>
-        <div css={infoWrapper}>
-          <div css={info}>
+      <div css={ContentWrapper}>
+        <div css={InfoWrapper}>
+          <div css={Info}>
             <Font text="목표 시간" kind="bodyText2" color="disableGray" />
             <Font text="30분" kind="bodyText1" color="basicTextColor" />
           </div>
-          <div css={info}>
+          <div css={Info}>
             <Font text="루틴 기간" kind="bodyText2" color="disableGray" />
             <Font
               text="12:00 ~ 13:30"
@@ -33,7 +33,7 @@ export const Routine = () => {
             />
           </div>
         </div>
-        <div css={startButton}>
+        <div css={StartButton}>
           <Font text="수정" kind="bodyText1" color="basicTextColor" />
         </div>
       </div>
@@ -41,7 +41,7 @@ export const Routine = () => {
   );
 };
 
-const container = css`
+const Container = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -53,12 +53,12 @@ const container = css`
   padding: 20px 24px;
 `;
 
-const headerWrapper = css`
+const HeaderWrapper = css`
   display: flex;
   justify-content: space-between;
 `;
 
-const checkBox = (isCheck: boolean) => css`
+const CheckBox = (isCheck: boolean) => css`
   width: 30px;
   height: 30px;
   background-color: ${isCheck ? "#5BDCA6" : "#CECECE"};
@@ -68,26 +68,26 @@ const checkBox = (isCheck: boolean) => css`
   border-radius: 10px;
 `;
 
-const contentWrapper = css`
+const ContentWrapper = css`
   display: flex;
   justify-content: space-between;
   align-items: end;
   gap: 10px;
 `;
 
-const infoWrapper = css`
+const InfoWrapper = css`
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
 
-const info = css`
+const Info = css`
   display: flex;
   align-items: center;
   gap: 10px;
 `;
 
-const startButton = css`
+const StartButton = css`
   display: flex;
   justify-content: center;
   align-items: center;
