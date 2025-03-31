@@ -1,11 +1,10 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import { CheckModal } from "./Components/CheckModal";
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<CheckModal />} />
+        <Route path="/" element={<></>} />
       </Routes>
     </BrowserRouter>
   );
