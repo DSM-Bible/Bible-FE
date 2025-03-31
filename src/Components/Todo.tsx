@@ -11,11 +11,11 @@ export const Todo = () => {
   };
 
   return (
-    <div css={containerStyle}>
-      <div css={checkBoxStyle(isCheck)} onClick={toggleCheck}>
+    <div css={Container}>
+      <div css={CheckBox(isCheck)} onClick={toggleCheck}>
         {isCheck && <img src={check} />}
       </div>
-      <div css={textStyle}>
+      <div css={Text}>
         <Font text="디자인 완료하기" kind="bodyText1" color="basicTextColor" />
         <Font text="오늘(2025-03-19)" kind="bodyText3" color="basicTextColor" />
       </div>
@@ -23,7 +23,7 @@ export const Todo = () => {
   );
 };
 
-const containerStyle = css`
+const Container = css`
   display: flex;
   align-items: center;
   gap: 15px;
@@ -34,7 +34,7 @@ const containerStyle = css`
   border-radius: 15px;
 `;
 
-const checkBoxStyle = (isCheck: boolean) => css`
+const CheckBox = (isCheck: boolean) => css`
   width: 30px;
   height: 30px;
   background-color: ${isCheck ? "#5BDCA6" : "#CECECE"};
@@ -44,7 +44,7 @@ const checkBoxStyle = (isCheck: boolean) => css`
   border-radius: 10px;
 `;
 
-const textStyle = css`
+const Text = css`
   display: flex;
   flex-direction: column;
 `;
