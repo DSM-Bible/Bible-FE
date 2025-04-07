@@ -1,13 +1,14 @@
 import { useRef, useState } from "react";
 import { css } from "@emotion/react";
-import InputDefault from "../Assets/InputDefault.svg";
-import InputFocus from "../Assets/InputFocus.svg";
-import lockDefault from "../Assets/lockDefault.svg";
-import lockFocus from "../Assets/lockFocus.svg";
-import closeEyesDefault from "../Assets/closeEyesDefault.svg";
-import closeEyesFoucs from "../Assets/closeEyesFocus.svg";
-import openEyesDefault from "../Assets/openEyesDefault.svg";
-import openEyesFocus from "../Assets/openEyesFocus.svg";
+import InputDefault from "../Assets/img/SVG/InputDefault.svg";
+import InputFocus from "../Assets/img/SVG/InputFocus.svg";
+import lockDefault from "../Assets/img/SVG/lockDefault.svg";
+import lockFocus from "../Assets/img/SVG/lockFocus.svg";
+import closeEyesDefault from "../Assets/img/SVG/closeEyesDefault.svg";
+import closeEyesFoucs from "../Assets/img/SVG/closeEyesFocus.svg";
+import openEyesDefault from "../Assets/img/SVG/openEyesDefault.svg";
+import openEyesFocus from "../Assets/img/SVG/openEyesFocus.svg";
+import { Color } from "../Styles/Color";
 
 interface InputProps {
   type?: string;
@@ -48,7 +49,7 @@ export const Input = ({ type, placeholder }: InputProps) => {
       <input
         ref={inputRef}
         css={InputStyle}
-        type={isPasswordVisible ? "text" : "password"}
+        type={type === "password" ? (isPasswordVisible ? "text" : "password") : type}
         placeholder={placeholder}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
@@ -71,6 +72,7 @@ const Container = css`
   width: 340px;
   height: 50px;
   gap: 10px;
+  border: 1px solid ${Color.disableGray};
   border-radius: 15px;
   padding: 0 10px;
 `;
@@ -79,8 +81,8 @@ const InputStyle = css`
   display: flex;
   width: 270px;
   height: 30px;
-  border: none;
   outline: none;
+  border: none;
   font-size: 15px;
   font-weight: 500;
 `;
