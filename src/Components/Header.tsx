@@ -1,11 +1,15 @@
 import { css } from "@emotion/react";
 import { Font } from "../Styles/Font";
 
-export const Header = () => {
+interface HeaderProps {
+  FontText: string;
+}
+
+export const Header = ({FontText}: HeaderProps) => {
   return (
     <>
       <div css={Container}>
-        <Font text="Page Name" kind="header" />
+        <Font text={FontText} kind="header" />
       </div>
     </>
   );
