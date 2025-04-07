@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
 import { Color } from "../Styles/Color";
-import SearchDefault from "../Assets/searchDefault.svg";
-import SearchFocus from "../Assets/searchFocus.svg";
+import SearchDefault from "../Assets/img/SVG/searchDefault.svg";
+import SearchFocus from "../Assets/img/SVG/searchFocus.svg";
 
 export const Search = () => {
   const [isFocused, setIsFocused] = useState(false);
@@ -32,7 +32,7 @@ const Container = css`
 `;
 
 const InputStyle = (isFocused: boolean) => css`
-  width: 340px;
+  width: 300px;
   height: 30px;
   padding-left: 40px;
   border: none;

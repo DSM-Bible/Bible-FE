@@ -38,6 +38,7 @@ const Menu = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 5px;
 `;
 
 const Icon = css`

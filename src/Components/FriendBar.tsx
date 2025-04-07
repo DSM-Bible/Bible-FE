@@ -2,8 +2,10 @@ import { css } from "@emotion/react";
 import FriendImg from "../Assets/img/SVG/Friend.svg";
 import { Font } from "../Styles/Font";
 import { Color } from "../Styles/Color";
+import { useState } from "react";
 
 export const FriendBar = () => {
+  const [isAdd] = useState(true);
   return (
     <div css={Container}>
       <div css={InfoBox}>
@@ -13,14 +15,20 @@ export const FriendBar = () => {
           <Font text="UserId" kind="bodyText2" color="disableGray" />
         </div>
       </div>
-      <div css={BtnBox}>
-        <div css={Accept}>
-          <Font text="수락" kind="bodyText3" color="mainColor" />
+      {isAdd ? (
+        <div css={BtnBox}>
+          <div css={Accept}>
+            <Font text="수락" kind="bodyText3" color="mainColor" />
+          </div>
+          <div css={Delete}>
+            <Font text="거절" kind="bodyText3" color="defaultRed" />
+          </div>
         </div>
+      ) : (
         <div css={Delete}>
-          <Font text="거절" kind="bodyText3" color="defaultRed" />
+          <Font text="친구 삭제" kind="bodyText3" color="defaultRed" />
         </div>
-      </div>
+      )}
     </div>
   );
 };
@@ -29,7 +37,7 @@ const Container = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 340px;
+  width: 300px;
   height: 65px;
   padding: 0 20px;
   gap: 15px;
@@ -40,7 +48,7 @@ const InfoBox = css`
   display: flex;
   align-items: center;
   gap: 15px;
-`
+`;
 
 const BtnBox = css`
   display: flex;
@@ -52,7 +60,7 @@ const Accept = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 45px;
+  width: 55px;
   height: 20px;
   border: 1px solid ${Color.mainColor};
   border-radius: 10px;
@@ -62,7 +70,7 @@ const Delete = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 45px;
+  width: 55px;
   height: 20px;
   border: 1px solid ${Color.defaultRed};
   border-radius: 10px;
