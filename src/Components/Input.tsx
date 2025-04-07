@@ -49,7 +49,7 @@ export const Input = ({ type, placeholder }: InputProps) => {
       <input
         ref={inputRef}
         css={InputStyle}
-        type={isPasswordVisible ? "text" : "password"}
+        type={type === "password" ? (isPasswordVisible ? "text" : "password") : type}
         placeholder={placeholder}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
