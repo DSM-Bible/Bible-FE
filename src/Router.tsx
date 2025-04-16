@@ -6,6 +6,7 @@ import { AddFriendPage } from "./Pages/AddFriendPage";
 import { Signup } from "./Pages/Account/Signup";
 import { ProfileSignup } from "./Pages/Account/Profile";
 import { Login } from "./Pages/Account/Login";
+import { MyPage } from "./Pages/MyPage";
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/Profile/Signup" element={<ProfileSignup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/my" element={<MyPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
