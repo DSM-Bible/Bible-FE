@@ -1,9 +1,9 @@
 import { css } from "@emotion/react";
-import BackIcon from "../Assets/img/SVG/Back.svg";
-import { Font } from "../Styles/Font";
-import { Search } from "../Components/Search";
+import BackIcon from "../../Assets/img/SVG/Back.svg";
+import { Font } from "../../Styles/Font";
+import { Search } from "../../Components/Search";
 import { useState } from "react";
-import { AddFriendBar } from "../Components/AddFriendBar";
+import { AddFriendBar } from "../../Components/AddFriendBar";
 
 export const AddFriendPage = () => {
   const [search, setSearch] = useState("");
