@@ -1,6 +1,7 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { ManageFriendPage } from "./Pages/ManageFriendPage";
 import { Layout } from "./Components/Layout";
+import { AddFriendPage } from "./Pages/AddFriendPage";
 
 function Router() {
   return (
@@ -9,6 +10,7 @@ function Router() {
         <Route path="" element={<></>} />
         <Route element={<Layout />}>
           <Route path="/manageFriend" element={<ManageFriendPage />} />
+          <Route path="/AddFriend" element={<AddFriendPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
