@@ -8,8 +8,10 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const token = Cookie.get("token");
-    if (token) config.headers.Authorization = `Bearer ${token}`;
+    // const token = Cookie.get("token");
+    //if (token)
+    config.headers.Authorization =
+      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3ZWpqMDUxMyIsImlhdCI6MTc0NDU0Nzk1NywiZXhwIjoxNzQ0NTY5NTU3fQ.sKNZlMCMcCRmzsu3NFrgJPDpq21H_LhUxkdtnKKPAmDPaIkGsaRclqqIQWOBSwJSjRW0EwiVMyWZvJJKRQFI4A";
     return config;
   },
   (err) => {
