@@ -6,21 +6,78 @@ import { Font } from "../../Styles/Font";
 import { Color } from "../../Styles/Color";
 import Profile from "../../Assets/img/SVG/DefaultProfileImg.svg";
 import ProfileEditBtn from "../../Assets/img/SVG/profileEditBtn.svg";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { SignupApi } from "../../Apis/account";
 
 export const ProfileSignup = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { id, password } = location.state || {};
+  const [nicknameInput, setNicknameInput] = useState("");
+  const [profileImg, setProfileImg] = useState<File | null>(null);
+
+  const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    if (file) {
+      setProfileImg(file)
+    }
+  }
+
+  const handleProfileSignup = () => {
+    const requestData = {
+      id,
+      password,
+      nickname: nicknameInput,
+    };
+
+    const formData = new FormData();
+
+    formData.append("body", new Blob([JSON.stringify(requestData)], {type: "application/json"}));
+
+    if(profileImg) {
+      formData.append("file", profileImg)
+    }
+
+    SignupApi(formData)
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error("회원가입 오류:", error);
+      });
+  };
+
   return (
     <>
       <div css={Container}>
         <div css={Content}>
           <Header FontText="회원가입" />
           <div css={ProfileEdit}>
-            <img src={Profile} alt="" />
-            <img className="Edit" src={ProfileEditBtn} alt="" />
+            <label htmlFor="profile-upload">
+              <img
+                src={profileImg ? URL.createObjectURL(profileImg) : Profile}
+                alt="프로필 이미지"
+              />
+              <img className="Edit" src={ProfileEditBtn} alt="편집 버튼" />
+            </label>
+            <input
+              type="file"
+              id="profile-upload"
+              accept="image/*"
+              onChange={handleImgChange}
+              style={{ display: "none" }}
+            />
           </div>
-          <Input type="text" placeholder="닉네임을 입력하세요" />
+          <Input
+            type="text"
+            placeholder="닉네임을 입력하세요"
+            value={nicknameInput}
+            onChange={(e) => setNicknameInput(e.target.value)}
+          />
         </div>
         <div css={BtnBox}>
-          <div>
+          <div onClick={handleProfileSignup}>
             <Button text="회원가입" />
           </div>
           <div css={MoveToLogin}>
@@ -53,13 +110,25 @@ const Content = css`
 
 const ProfileEdit = css`
   position: relative;
+  label {
+    cursor: pointer;
+  }
 
   .Edit {
     position: absolute;
-    left: 120px;
-    top: 110px;
+    left: 95px;
+    top: 90px;
+    width: 25px;
+    height: 25px;
   }
-`
+
+  img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+`;
 
 const BtnBox = css`
   display: flex;
