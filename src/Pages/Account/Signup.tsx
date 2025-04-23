@@ -5,12 +5,37 @@ import { Input } from "../../Components/Input";
 import { Button } from "../../Components/Button";
 import { Color } from "../../Styles/Color";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { SignupApi } from "../../Apis/account";
 
 export const Signup = () => {
   const navigate = useNavigate();
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [checkPassword, setCheckPassword] = useState("");
+  const [nickname, setNickname] = useState("");
 
-  const ProfileSignup = () => navigate("/Profile/Signup");
+  const handleSignup = () => {
+    const formData = new FormData();
+    const json = JSON.stringify({
+      id,
+      password,
+      nickname,
+    });
 
+    formData.append(
+      "body",
+      new Blob([json], {
+        type: "application/json",
+      })
+    );
+
+    SignupApi(formData);
+  };
+
+  const ProfileSignup = () => {
+    navigate("/Profile/Signup", { state: { id, password, nickname } });
+  };
   return (
     <>
       <div css={Container}>
@@ -33,9 +58,24 @@ export const Signup = () => {
             />
           </div>
           <div css={InputBox}>
-            <Input type="text" placeholder="아이디를 입력해주세요" />
-            <Input type="password" placeholder="비밀번호를 입력해주세요" />
-            <Input type="password" placeholder="비밀번호를 입력해주세요" />
+            <Input
+              type="text"
+              placeholder="아이디를 입력해주세요"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+            />
+            <Input
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Input
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              value={checkPassword}
+              onChange={(e) => setCheckPassword(e.target.value)}
+            />
           </div>
         </div>
         <div css={BtnBox}>

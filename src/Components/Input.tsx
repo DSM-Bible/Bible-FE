@@ -13,9 +13,11 @@ import { Color } from "../Styles/Color";
 interface InputProps {
   type?: string;
   placeholder?: string;
+  value?: any;
+  onChange?: (e:any) => void;
 }
 
-export const Input = ({ type, placeholder }: InputProps) => {
+export const Input = ({ type, placeholder, value, onChange }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -53,6 +55,8 @@ export const Input = ({ type, placeholder }: InputProps) => {
         placeholder={placeholder}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        value={value}
+        onChange={onChange}
       />
       {type === "password" && (
         <img

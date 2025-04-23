@@ -4,43 +4,65 @@ import { Font } from "../../Styles/Font";
 import { Input } from "../../Components/Input";
 import { Button } from "../../Components/Button";
 import { Color } from "../../Styles/Color";
+import { useState } from "react";
+import { LoginApi } from "../../Apis/account";
+import { Cookie } from "../../Utils/cookie";
+import { useNavigate } from "react-router-dom";
+
 
 export const Login = () => {
+
+  const navigate = useNavigate();
+
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
+  
+
+  const handleLogin = () => {
+    LoginApi ({
+      id: userId,
+      password: password
+    })
+    .then ((res) => {
+      Cookie.set("token", res.data.token)
+      navigate('/');
+    })
+    .catch((err) => {
+      console.error(err);
+    }
+    )
+  }
+
   return (
-    <>
-      <div css={Container}>
-        <Header FontText="로그인" />
-        <div css={TitleBox}>
-          <Font
-            text="일상의 사소하고 작은 변화"
-            kind="headLine1"
-            color={"defaultBlack"}
-          />
-          <div>
-            <Font text="갓생로그" kind="headLine1" color={"mainColor"} />
-            <Font
-              text="와 함께 시작해보세요 :D"
-              kind="headLine1"
-              color={"defaultBlack"}
-            />
-          </div>
-          <Font text="아이디와 비밀번호를 통해 로그인을 진행해주세요" kind="bodyText2" color={"disableGray"} />
+    <div css={Container}>
+      <Header FontText="로그인" />
+      <div css={TitleBox}>
+        <Font text="일상의 사소하고 작은 변화" kind="headLine1" color="defaultBlack" />
+        <div>
+          <Font text="갓생로그" kind="headLine1" color="mainColor" />
+          <Font text="와 함께 시작해보세요 :D" kind="headLine1" color="defaultBlack" />
         </div>
-        <div css={InputBox}>
-          <Input type="text" placeholder="아이디를 입력해주세요" />
-          <Input type="password" placeholder="비밀번호를 입력해주세요" />
-        </div>
-        <div css={BtnBox}>
-          <Button text="로그인" />
-          <div>
-            <Font text="계정이 없으신가요?" />
-            <button>회원가입</button>
-          </div>
+        <Font
+          text="아이디와 비밀번호를 통해 로그인을 진행해주세요"
+          kind="bodyText2"
+          color="disableGray"
+        />
+      </div>
+      <div css={InputBox}>
+        <Input type="text" placeholder="아이디를 입력해주세요" value={userId} onChange={(e) => setUserId(e.target.value)} />
+        <Input type="password" placeholder="비밀번호를 입력해주세요" value={password} onChange={(e) => setPassword(e.target.value)} />
+      </div>
+      <div css={BtnBox}>
+        <Button text="로그인" onClick={handleLogin} />
+        <div>
+          <Font text="계정이 없으신가요?" />
+          <button>회원가입</button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
+
 
 
 const Container = css`
