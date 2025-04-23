@@ -4,11 +4,12 @@ import { Color } from "../Styles/Color";
 
 interface ButtonPropType {
   text: string;
+  onClick?:() => void;
 }
 
-export const Button = ({ text }: ButtonPropType) => {
+export const Button = ({ text, onClick }: ButtonPropType) => {
   return (
-    <div css={Container}>
+    <div css={Container} onClick={onClick}>
       <Font text={text} kind="btnText" color="defaultWhite" />
     </div>
   );
