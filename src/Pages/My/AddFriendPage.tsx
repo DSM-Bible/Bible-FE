@@ -2,11 +2,36 @@ import { css } from "@emotion/react";
 import BackIcon from "../../Assets/img/SVG/Back.svg";
 import { Font } from "../../Styles/Font";
 import { Search } from "../../Components/Search";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddFriendBar } from "../../Components/AddFriendBar";
+import { UserList } from "../../Apis/Friend";
+import { UserListResponse } from "../../Apis/Friend/type";
 
 export const AddFriendPage = () => {
+  const [data, setData] = useState<UserListResponse | null>(null);
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const getUserList = async () => {
+      try {
+        const response = await UserList();
+        setData(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getUserList();
+  }, []);
+
+  const usersList = () => {
+    if (!data || !data.user) return [];
+    if (search === "") return data.user;
+    return data.user.filter(
+      (user) =>
+        user.userName.toLowerCase().includes(search.toLowerCase()) ||
+        user.userId.toLowerCase().includes(search.toLowerCase())
+    );
+  };
 
   return (
     <div css={Container}>
@@ -16,7 +41,13 @@ export const AddFriendPage = () => {
       </div>
       <div css={Wrapper}>
         <Search onChange={setSearch} />
-        <AddFriendBar />
+        {usersList().map((value) => (
+          <AddFriendBar
+            key={value.userId}
+            value={value}
+            requestData={{ friend_id: value.userId }}
+          />
+        ))}
       </div>
     </div>
   );
