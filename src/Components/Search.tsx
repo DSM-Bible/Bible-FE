@@ -4,7 +4,7 @@ import { Color } from "../Styles/Color";
 import SearchDefault from "../Assets/img/SVG/searchDefault.svg";
 import SearchFocus from "../Assets/img/SVG/searchFocus.svg";
 
-export const Search = () => {
+export const Search = ({ onChange }: { onChange: (value: string) => void }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -20,6 +20,7 @@ export const Search = () => {
         placeholder="검색"
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        onChange={(e) => onChange(e.target.value)}
       />
     </div>
   );

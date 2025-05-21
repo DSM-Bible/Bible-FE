@@ -7,6 +7,8 @@ interface CheckModalPropsType {
   content1?: string;
   content2?: string;
   placeholder?: string;
+  onCancel: () => void;
+  onConfirm: () => void;
 }
 
 export const CheckModal = ({
@@ -14,39 +16,56 @@ export const CheckModal = ({
   content1,
   content2,
   placeholder,
+  onCancel,
+  onConfirm,
 }: CheckModalPropsType) => {
   return (
-    <div css={Container}>
-      <div css={TextWrapper}>
-        <Font text={title} kind="headLine1" color="basicTextColor" />
-        <div css={Content}>
-          {[content1, content2].map(
-            (content, index) =>
-              content && (
-                <Font
-                  key={index}
-                  text={content}
-                  kind="modalText"
-                  color="basicTextColor"
-                />
-              )
-          )}
-          {!content1 && !content2 && (
-            <input css={Input} type="text" placeholder={placeholder} />
-          )}
+    <div css={Backdrop}>
+      <div css={Container}>
+        <div css={TextWrapper}>
+          <Font text={title} kind="headLine1" color="basicTextColor" />
+          <div css={Content}>
+            {[content1, content2].map(
+              (content, index) =>
+                content && (
+                  <Font
+                    key={index}
+                    text={content}
+                    kind="modalText"
+                    color="basicTextColor"
+                  />
+                )
+            )}
+            {!content1 && !content2 && (
+              <input css={Input} type="text" placeholder={placeholder} />
+            )}
+          </div>
         </div>
-      </div>
-      <div css={ButtonWrapper}>
-        <div css={CancelButton}>
-          <Font text="취소" kind="bodyText1" color="defaultRed" />
-        </div>
-        <div css={ConfirmButton}>
-          <Font text="확인" kind="bodyText1" color="defaultBlue" />
+        <div css={ButtonWrapper}>
+          <div css={CancelButton} onClick={onCancel}>
+            <Font text="취소" kind="bodyText1" color="defaultRed" />
+          </div>
+          <div css={ConfirmButton} onClick={onConfirm}>
+            <Font text="확인" kind="bodyText1" color="defaultBlue" />
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
+const Backdrop = css`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
 
 const Container = css`
   display: flex;
@@ -79,7 +98,6 @@ const Input = css`
   border: 1px solid #a7a7a7;
   border-radius: 8px;
   padding: 12px 16px;
-
   &:focus {
     border: 1px solid ${Color.mainColor};
     outline: none;
@@ -103,10 +121,8 @@ const Button = css`
 const CancelButton = css`
   ${Button}
   border-right: 1px solid #a7a7a7;
-  color: ${Color.defaultRed};
 `;
 
 const ConfirmButton = css`
   ${Button}
-  color: ${Color.defaultBlue};
 `;
