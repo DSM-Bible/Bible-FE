@@ -60,8 +60,9 @@ const Back = css`
 const InputWrapper = css`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 25px;
-  margin-bottom: 35%;
+  margin-bottom: 130px;
 `;
 
 const Btn = css`
