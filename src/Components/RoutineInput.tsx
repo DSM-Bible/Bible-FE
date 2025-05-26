@@ -1,20 +1,20 @@
 import { css } from "@emotion/react";
-import RoutineNameImg from "../Assets/img/SVG/RoutineName.svg"
+import RoutineNameImg from "../Assets/img/SVG/RoutineName.svg";
 import { Color } from "../Styles/Color";
 import { Font } from "../Styles/Font";
 
 interface RoutineInputProps {
-  type?: "text" | "time"
-  placeholder?: string
+  label: string;
+  placeholder?: string;
 }
 
-export const RoutineInput = ({type, placeholder}: RoutineInputProps) => {
+export const RoutineInput = ({ label, placeholder }: RoutineInputProps) => {
   return (
     <div css={Container}>
-      <Font text="루틴 이름" kind="bodyText1" color="defaultBlack" />
+      <Font text={label} kind="bodyText1" color="defaultBlack" />
       <div css={InputBox}>
         <img css={Img} src={RoutineNameImg} alt="" />
-        <input css={Input} type={type} placeholder={placeholder} />
+        <input css={Input} type="text" placeholder={placeholder} />
       </div>
     </div>
   );
@@ -45,4 +45,8 @@ const Input = css`
   border-radius: 15px;
   outline: none;
   padding-left: 50px;
-`
+
+  &::placeholder {
+    color: black;
+  }
+`;

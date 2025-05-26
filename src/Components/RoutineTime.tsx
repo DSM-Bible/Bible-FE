@@ -5,10 +5,10 @@ import { useRef } from "react";
 import { Font } from "../Styles/Font";
 
 interface RoutineTimeProps {
-  labelName?: string;
+  label?: string;
 }
 
-export const RoutineTime = ({ labelName }: RoutineTimeProps) => {
+export const RoutineTime = ({ label }: RoutineTimeProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
@@ -20,10 +20,16 @@ export const RoutineTime = ({ labelName }: RoutineTimeProps) => {
   return (
     <>
       <div css={Container}>
-        <Font text={labelName} kind="bodyText1" color="defaultBlack" />
+        <Font text={label} kind="bodyText1" color="defaultBlack" />
         <div css={InputBox}>
-          <img css={Img} src={RoutineTimeImg} alt=""/>
-          <input css={Input} type="time" ref={inputRef} onClick={handleClick} step="300" />
+          <img css={Img} src={RoutineTimeImg} alt="" />
+          <input
+            css={Input}
+            type="time"
+            ref={inputRef}
+            onClick={handleClick}
+            step="300"
+          />
         </div>
       </div>
     </>
