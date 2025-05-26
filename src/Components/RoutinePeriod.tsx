@@ -67,6 +67,7 @@ const Container = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 340px;
   gap: 5px;
 `;
 
@@ -74,7 +75,6 @@ const InputBox = css`
   display: flex;
   align-items: center;
   position: relative;
-  width: 306px;
   height: 50px;
   border: 1px solid ${Color.disableGray};
   border-radius: 15px;
@@ -91,6 +91,10 @@ const Img = css`
 const SelectedText = css`
   font-size: 15px;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 `;
 
 const Dropdown = css`

@@ -40,6 +40,7 @@ const Container = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 340px;
   gap: 5px;
 `;
 
@@ -58,7 +59,7 @@ const Img = css`
 const Input = css`
   font-size: 15px;
   font-weight: 500;
-  width: 340px;
+  width: 100%;
   height: 50px;
   border: 1px solid ${Color.disableGray};
   border-radius: 15px;

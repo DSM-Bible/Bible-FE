@@ -8,6 +8,7 @@ import { ProfileSignup } from "./Pages/Account/Profile";
 import { Login } from "./Pages/Account/Login";
 import { RoutineList } from "./Pages/routine/routineList";
 import { CreateRoutine } from "./Pages/routine/CreateRoutine";
+import { UpdateRoutine } from "./Pages/routine/Updateroutine";
 
 function Router() {
   return (
@@ -23,6 +24,7 @@ function Router() {
           <Route path="/my" element={<MyPage />} />
           <Route path="/routineList" element={<RoutineList />} />
           <Route path="/createRoutine" element={<CreateRoutine />} />
+          <Route path="/updateRoutine" element={<UpdateRoutine />} />
         </Route>
       </Routes>
     </BrowserRouter>
