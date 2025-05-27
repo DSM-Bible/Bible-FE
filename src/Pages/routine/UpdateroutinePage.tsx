@@ -8,7 +8,7 @@ import { Button } from "../../Components/Button";
 import { useEffect, useState } from "react";
 import { RoutineDetail, UpdateRoutine } from "../../Apis/Routine";
 import { RoutineRequest } from "../../Apis/Routine/type";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export type RepeatPeriod =
   | "EVERY_DAY"
@@ -18,6 +18,7 @@ export type RepeatPeriod =
   | "EVERY_MONTH";
 
 export const UpdateroutinePage = () => {
+  const navigate = useNavigate();
   const { routineId } = useParams();
   const [title, setTitle] = useState("");
   const [startTime, setStartTime] = useState("");
@@ -71,10 +72,9 @@ export const UpdateroutinePage = () => {
 
     try {
       await UpdateRoutine(routineId, data);
-      alert("루틴이 성공적으로 수정되었습니다!");
+      navigate("/routine");
     } catch (err) {
       console.error("루틴 수정 실패:", err);
-      alert("루틴 수정에 실패했습니다.");
     }
   };
 

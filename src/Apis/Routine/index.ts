@@ -19,8 +19,10 @@ export const UpdateRoutine = async (
   return await instance.patch(`${router}/${routineId}`, data);
 };
 
-export const DeleteRoutine = async (routineId: string) => {
-  return await instance.delete(`${router}/${routineId}`);
+export const DeleteRoutine = async (routineIds: string[]) => {
+  await Promise.all(
+    routineIds.map((id) => instance.delete(`${router}/${id}`))
+  );
 };
 
 export const RoutineList = async (date: string) => {

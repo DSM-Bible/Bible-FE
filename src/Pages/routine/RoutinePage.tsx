@@ -4,13 +4,14 @@ import { RoutineDateSelector } from "../../Components/RoutineDropdown";
 import { Routine } from "../../Components/Routine";
 import { useEffect, useState } from "react";
 import { CheckModal } from "../../Components/CheckModal";
-import { RoutineList } from "../../Apis/Routine";
+import { DeleteRoutine, RoutineList } from "../../Apis/Routine";
 import { RoutineListResponse } from "../../Apis/Routine/type";
 
 export const RoutinePage = () => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState<RoutineListResponse | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   useEffect(() => {
     if (!selectedDate) return;
@@ -27,7 +28,21 @@ export const RoutinePage = () => {
     getUserList();
   }, [selectedDate]);
 
-  const handleDelete = async () => {};
+  const handleSelect = (id: string, isChecked: boolean) => {
+    setSelectedIds((prev) =>
+      isChecked ? [...prev, id] : prev.filter((item) => item !== id)
+    );
+  };
+
+  const handleDelete = async () => {
+    try {
+      await DeleteRoutine(selectedIds);
+      setShowModal(false);
+      location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <div css={Container}>
@@ -48,11 +63,17 @@ export const RoutinePage = () => {
           />
           <div css={ButtonWrapper}>
             <Font text="추가" kind="bodyText1" color="basicTextColor" />
-            <Font text="삭제" kind="bodyText1" color="defaultRed" />
+            <div onClick={() => setShowModal(true)}>
+              <Font text="삭제" kind="bodyText1" color="defaultRed" />
+            </div>
           </div>
         </div>
         {data?.data?.map((routine) => (
-          <Routine key={routine.routineId} value={routine} />
+          <Routine
+            key={routine.routineId}
+            value={routine}
+            onSelect={handleSelect}
+          />
         ))}
       </div>
       {showModal && (
@@ -73,6 +94,7 @@ const Container = css`
   flex-direction: column;
   align-items: center;
   gap: 15px;
+  margin-bottom: 100px;
 `;
 
 const TitleWrapper = css`

@@ -27,7 +27,10 @@ function Router() {
           <Route path="/my" element={<MyPage />} />
           <Route path="/routineList" element={<RoutineList />} />
           <Route path="/createRoutine" element={<CreateRoutinePage />} />
-          <Route path="/updateRoutine" element={<UpdateroutinePage />} />
+          <Route
+            path="/updateRoutine/:routineId"
+            element={<UpdateroutinePage />}
+          />
           <Route path="/routine" element={<RoutinePage />} />
           <Route path="/start" element={<StartPage />} />
           <Route path="/finish" element={<FinishPage />} />

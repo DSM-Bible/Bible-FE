@@ -4,16 +4,21 @@ import { Color } from "../Styles/Color";
 import { useState } from "react";
 import check from "../Assets/img/SVG/check.svg";
 import { Data } from "../Apis/Routine/type";
+import { useNavigate } from "react-router-dom";
 
 interface RoutineProps {
   value: Data;
+  onSelect: (id: string, isChecked: boolean) => void;
 }
 
-export const Routine = ({ value }: RoutineProps) => {
+export const Routine = ({ value, onSelect }: RoutineProps) => {
   const [isCheck, setIsCheck] = useState(false);
+  const navigate = useNavigate();
 
   const toggleCheck = () => {
-    setIsCheck((prev) => !prev);
+    const newCheck = !isCheck;
+    setIsCheck(newCheck);
+    onSelect(value.routineId, newCheck);
   };
 
   const getDurationText = (start: string, end: string): string => {
@@ -34,6 +39,10 @@ export const Routine = ({ value }: RoutineProps) => {
       return `${hours}시간 ${minutes > 0 ? `${minutes}분` : ""}`.trim();
     }
     return `${minutes}분`;
+  };
+
+  const handleUpdate = () => {
+    navigate(`/UpdateRoutine/${value.routineId}`);
   };
 
   return (
@@ -63,7 +72,7 @@ export const Routine = ({ value }: RoutineProps) => {
             />
           </div>
         </div>
-        <div css={StartButton}>
+        <div css={StartButton} onClick={handleUpdate}>
           <Font text="수정" kind="bodyText1" color="basicTextColor" />
         </div>
       </div>
