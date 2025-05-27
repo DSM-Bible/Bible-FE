@@ -6,11 +6,18 @@ import { Color } from "../Styles/Color";
 
 interface RoutinePeriodProps {
   label?: string;
+  onChange: (value: string) => void;
 }
 
-const options = ["매일", "1주", "2주", "3주", "매달"];
+const options: { label: string; value: string }[] = [
+  { label: "매일", value: "EVERY_DAY" },
+  { label: "1주", value: "EVERY_WEEKS" },
+  { label: "2주", value: "EVERY_OTHER_WEEKS" },
+  { label: "3주", value: "EVERY_THREE_WEEKS" },
+  { label: "매달", value: "EVERY_MONTH" },
+];
 
-export const RoutinePeriod = ({ label }: RoutinePeriodProps) => {
+export const RoutinePeriod = ({ label, onChange }: RoutinePeriodProps) => {
   const [selectedOption, setSelectedOption] =
     useState("반복 주기를 선택해 주세요.");
   const [isOpen, setIsOpen] = useState(false);
@@ -18,9 +25,10 @@ export const RoutinePeriod = ({ label }: RoutinePeriodProps) => {
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
-  const handleSelect = (option: string) => {
-    setSelectedOption(option);
+  const handleSelect = (option: { label: string; value: string }) => {
+    setSelectedOption(option.label);
     setIsOpen(false);
+    onChange(option.value);
   };
 
   useEffect(() => {
@@ -49,11 +57,11 @@ export const RoutinePeriod = ({ label }: RoutinePeriodProps) => {
           <div css={Dropdown}>
             {options.map((option) => (
               <div
-                key={option}
+                key={option.value}
                 css={DropdownItem}
                 onClick={() => handleSelect(option)}
               >
-                {option}
+                {option.label}
               </div>
             ))}
           </div>

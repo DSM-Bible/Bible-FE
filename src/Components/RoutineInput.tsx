@@ -6,15 +6,25 @@ import { Font } from "../Styles/Font";
 interface RoutineInputProps {
   label: string;
   placeholder?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const RoutineInput = ({ label, placeholder }: RoutineInputProps) => {
+export const RoutineInput = ({
+  label,
+  placeholder,
+  onChange,
+}: RoutineInputProps) => {
   return (
     <div css={Container}>
       <Font text={label} kind="bodyText1" color="defaultBlack" />
       <div css={InputBox}>
         <img css={Img} src={RoutineNameImg} alt="" />
-        <input css={Input} type="text" placeholder={placeholder} />
+        <input
+          css={Input}
+          type="text"
+          placeholder={placeholder}
+          onChange={onChange}
+        />
       </div>
     </div>
   );

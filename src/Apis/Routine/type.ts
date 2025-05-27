@@ -2,7 +2,7 @@ export type RoutineRequest = {
   title: string;
   startTime: string;
   endTime: string;
-  reoeatPeriod: RepeatPeriod;
+  repeatPeriod: RepeatPeriod;
 };
 
 export type RepeatPeriod =
