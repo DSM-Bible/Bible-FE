@@ -1,9 +1,12 @@
-/** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Color } from "../Styles/Color";
 
-export const RoutineDateSelector = () => {
+export const RoutineDateSelector = ({
+  onChange,
+}: {
+  onChange: (date: string) => void;
+}) => {
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
   const [day, setDay] = useState("");
@@ -11,6 +14,17 @@ export const RoutineDateSelector = () => {
   const years = Array.from({ length: 10 }, (_, i) => 2024 + i);
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
+
+  useEffect(() => {
+    if (year && month && day) {
+      const formattedMonth =
+        month.padStart?.(2, "0") ?? String(month).padStart(2, "0");
+      const formattedDay =
+        day.padStart?.(2, "0") ?? String(day).padStart(2, "0");
+      const formattedDate = `${year}-${formattedMonth}-${formattedDay}`;
+      onChange(formattedDate);
+    }
+  }, [year, month, day, onChange]);
 
   return (
     <div css={Wrapper}>
@@ -21,7 +35,7 @@ export const RoutineDateSelector = () => {
       >
         <option value="">연</option>
         {years.map((y) => (
-          <option key={y} value={y}>
+          <option key={y} value={String(y)}>
             {y}년
           </option>
         ))}
@@ -34,7 +48,7 @@ export const RoutineDateSelector = () => {
       >
         <option value="">월</option>
         {months.map((m) => (
-          <option key={m} value={m}>
+          <option key={m} value={String(m)}>
             {m}월
           </option>
         ))}
@@ -43,7 +57,7 @@ export const RoutineDateSelector = () => {
       <select css={Select} value={day} onChange={(e) => setDay(e.target.value)}>
         <option value="">일</option>
         {days.map((d) => (
-          <option key={d} value={d}>
+          <option key={d} value={String(d)}>
             {d}일
           </option>
         ))}

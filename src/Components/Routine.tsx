@@ -3,17 +3,43 @@ import { Font } from "../Styles/Font";
 import { Color } from "../Styles/Color";
 import { useState } from "react";
 import check from "../Assets/img/SVG/check.svg";
+import { Data } from "../Apis/Routine/type";
 
-export const Routine = () => {
+interface RoutineProps {
+  value: Data;
+}
+
+export const Routine = ({ value }: RoutineProps) => {
   const [isCheck, setIsCheck] = useState(false);
 
   const toggleCheck = () => {
     setIsCheck((prev) => !prev);
   };
+
+  const getDurationText = (start: string, end: string): string => {
+    const [startHour, startMinute] = start.split(":").map(Number);
+    const [endHour, endMinute] = end.split(":").map(Number);
+
+    const startTotal = startHour * 60 + startMinute;
+    const endTotal = endHour * 60 + endMinute;
+
+    const diff = endTotal - startTotal;
+
+    if (diff <= 0) return "0분";
+
+    const hours = Math.floor(diff / 60);
+    const minutes = diff % 60;
+
+    if (hours > 0) {
+      return `${hours}시간 ${minutes > 0 ? `${minutes}분` : ""}`.trim();
+    }
+    return `${minutes}분`;
+  };
+
   return (
     <div css={Container}>
       <div css={HeaderWrapper}>
-        <Font text="루틴이름꺄를ㄺ" kind="headLine2" color="basicTextColor" />
+        <Font text={value.title} kind="headLine2" color="basicTextColor" />
         <div css={CheckBox(isCheck)} onClick={toggleCheck}>
           {isCheck && <img src={check} />}
         </div>
@@ -22,12 +48,16 @@ export const Routine = () => {
         <div css={InfoWrapper}>
           <div css={Info}>
             <Font text="목표 시간" kind="bodyText2" color="disableGray" />
-            <Font text="30분" kind="bodyText1" color="basicTextColor" />
+            <Font
+              text={getDurationText(value.startTime, value.endTime)}
+              kind="bodyText1"
+              color="basicTextColor"
+            />
           </div>
           <div css={Info}>
             <Font text="루틴 기간" kind="bodyText2" color="disableGray" />
             <Font
-              text="12:00 ~ 13:30"
+              text={`${value.startTime}~${value.endTime}`}
               kind="bodyText1"
               color="basicTextColor"
             />

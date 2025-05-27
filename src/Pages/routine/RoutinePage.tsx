@@ -2,11 +2,30 @@ import { css } from "@emotion/react";
 import { Font } from "../../Styles/Font";
 import { RoutineDateSelector } from "../../Components/RoutineDropdown";
 import { Routine } from "../../Components/Routine";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CheckModal } from "../../Components/CheckModal";
+import { RoutineList } from "../../Apis/Routine";
+import { RoutineListResponse } from "../../Apis/Routine/type";
 
 export const RoutinePage = () => {
   const [showModal, setShowModal] = useState(false);
+  const [data, setData] = useState<RoutineListResponse | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string>("");
+
+  useEffect(() => {
+    if (!selectedDate) return;
+    const getUserList = async () => {
+      try {
+        const response = await RoutineList(selectedDate);
+        console.log(selectedDate);
+
+        setData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getUserList();
+  }, [selectedDate]);
 
   const handleDelete = async () => {};
   return (
@@ -20,10 +39,10 @@ export const RoutinePage = () => {
             color="disableGray"
           />
         </div>
-        <RoutineDateSelector />
+        <RoutineDateSelector onChange={setSelectedDate} />
         <div css={Wrapper}>
           <Font
-            text="총 N개의 루틴이 있습니다."
+            text={`총 ${data?.data.length ?? 0}개의 루틴이 있습니다.`}
             kind="bodyText1"
             color="basicTextColor"
           />
@@ -32,7 +51,9 @@ export const RoutinePage = () => {
             <Font text="삭제" kind="bodyText1" color="defaultRed" />
           </div>
         </div>
-        <Routine />
+        {data?.data?.map((routine) => (
+          <Routine key={routine.routineId} value={routine} />
+        ))}
       </div>
       {showModal && (
         <CheckModal
@@ -51,6 +72,7 @@ const Container = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 15px;
 `;
 
 const TitleWrapper = css`
@@ -65,7 +87,6 @@ const Wrapper = css`
   width: 320px;
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
 `;
 
 const ButtonWrapper = css`

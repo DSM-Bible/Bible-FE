@@ -1,6 +1,5 @@
 import { instance } from "../axios";
 import {
-  RoutineListRequest,
   RoutineListResponse,
   RoutineRequest,
   RoutineDetailResponse,
@@ -24,8 +23,8 @@ export const DeleteRoutine = async (routineId: string) => {
   return await instance.delete(`${router}/${routineId}`);
 };
 
-export const RoutineList = async (data: RoutineListRequest) => {
-  return await instance.get<RoutineListResponse>(`${router}/list`, { data });
+export const RoutineList = async (date: string) => {
+  return await instance.get<RoutineListResponse>(`${router}/list/${date}`);
 };
 
 export const RoutineDetail = async (routineId: string) => {

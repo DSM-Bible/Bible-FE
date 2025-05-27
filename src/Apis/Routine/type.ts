@@ -12,15 +12,11 @@ export type RepeatPeriod =
   | "EVERY_THREE_WEEKS"
   | "EVERY_MONTH";
 
-export type RoutineListRequest = {
-  date: string;
-};
-
 export type RoutineListResponse = {
   data: Data[];
 };
 
-type Data = {
+export type Data = {
   routineId: string;
   title: string;
   startTime: string;
