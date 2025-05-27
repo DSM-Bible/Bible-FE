@@ -8,7 +8,7 @@ import { ProfileSignup } from "./Pages/Account/Profile";
 import { Login } from "./Pages/Account/Login";
 import { RoutineList } from "./Pages/routine/RoutineList";
 import { CreateRoutinePage } from "./Pages/routine/CreateRoutinePage";
-import { UpdateRoutine } from "./Pages/routine/Updateroutine";
+import { UpdateroutinePage } from "./Pages/routine/UpdateroutinePage";
 import { RoutinePage } from "./Pages/routine/RoutinePage";
 import { StartPage } from "./Pages/routine/StartPage";
 import { FinishPage } from "./Pages/routine/FinishPage";
@@ -27,7 +27,7 @@ function Router() {
           <Route path="/my" element={<MyPage />} />
           <Route path="/routineList" element={<RoutineList />} />
           <Route path="/createRoutine" element={<CreateRoutinePage />} />
-          <Route path="/updateRoutine" element={<UpdateRoutine />} />
+          <Route path="/updateRoutine" element={<UpdateroutinePage />} />
           <Route path="/routine" element={<RoutinePage />} />
           <Route path="/start" element={<StartPage />} />
           <Route path="/finish" element={<FinishPage />} />

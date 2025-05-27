@@ -6,10 +6,11 @@ import { Font } from "../Styles/Font";
 
 interface RoutineTimeProps {
   label?: string;
+  value?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const RoutineTime = ({ label, onChange }: RoutineTimeProps) => {
+export const RoutineTime = ({ label, value, onChange }: RoutineTimeProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
@@ -29,6 +30,7 @@ export const RoutineTime = ({ label, onChange }: RoutineTimeProps) => {
             type="time"
             ref={inputRef}
             onClick={handleClick}
+            value={value}
             step="300"
             onChange={onChange}
           />

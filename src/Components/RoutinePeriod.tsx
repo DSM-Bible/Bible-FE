@@ -3,13 +3,15 @@ import RoutineTimeImg from "../Assets/img/SVG/RoutineTime.svg";
 import { useState, useRef, useEffect } from "react";
 import { Font } from "../Styles/Font";
 import { Color } from "../Styles/Color";
+import { RepeatPeriod } from "../Apis/Routine/type";
 
 interface RoutinePeriodProps {
   label?: string;
-  onChange: (value: string) => void;
+  value?: RepeatPeriod | null;
+  onChange: (value: RepeatPeriod) => void;
 }
 
-const options: { label: string; value: string }[] = [
+const options: { label: string; value: RepeatPeriod }[] = [
   { label: "매일", value: "EVERY_DAY" },
   { label: "1주", value: "EVERY_WEEKS" },
   { label: "2주", value: "EVERY_OTHER_WEEKS" },
@@ -17,15 +19,26 @@ const options: { label: string; value: string }[] = [
   { label: "매달", value: "EVERY_MONTH" },
 ];
 
-export const RoutinePeriod = ({ label, onChange }: RoutinePeriodProps) => {
+export const RoutinePeriod = ({
+  label,
+  value,
+  onChange,
+}: RoutinePeriodProps) => {
   const [selectedOption, setSelectedOption] =
     useState("반복 주기를 선택해 주세요.");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const foundOption = options.find((option) => option.value === value);
+    if (foundOption) {
+      setSelectedOption(foundOption.label);
+    }
+  }, [value]);
+
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
-  const handleSelect = (option: { label: string; value: string }) => {
+  const handleSelect = (option: { label: string; value: RepeatPeriod }) => {
     setSelectedOption(option.label);
     setIsOpen(false);
     onChange(option.value);

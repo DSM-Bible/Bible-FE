@@ -6,12 +6,14 @@ import { Font } from "../Styles/Font";
 interface RoutineInputProps {
   label: string;
   placeholder?: string;
+  value?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const RoutineInput = ({
   label,
   placeholder,
+  value,
   onChange,
 }: RoutineInputProps) => {
   return (
@@ -22,6 +24,7 @@ export const RoutineInput = ({
         <input
           css={Input}
           type="text"
+          value={value}
           placeholder={placeholder}
           onChange={onChange}
         />
