@@ -10,6 +10,8 @@ import { RoutineList } from "./Pages/routine/routineList";
 import { CreateRoutine } from "./Pages/routine/CreateRoutine";
 import { UpdateRoutine } from "./Pages/routine/Updateroutine";
 import { RoutinePage } from "./Pages/routine/RoutinePage";
+import { StartPage } from "./Pages/routine/StartPage";
+import { FinishPage } from "./Pages/routine/FinishPage";
 
 function Router() {
   return (
@@ -27,6 +29,8 @@ function Router() {
           <Route path="/createRoutine" element={<CreateRoutine />} />
           <Route path="/updateRoutine" element={<UpdateRoutine />} />
           <Route path="/routine" element={<RoutinePage />} />
+          <Route path="/start" element={<StartPage />} />
+          <Route path="/finish" element={<FinishPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
