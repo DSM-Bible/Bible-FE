@@ -9,6 +9,7 @@ import { Login } from "./Pages/Account/Login";
 import { RoutineList } from "./Pages/routine/routineList";
 import { CreateRoutine } from "./Pages/routine/CreateRoutine";
 import { UpdateRoutine } from "./Pages/routine/Updateroutine";
+import { RoutinePage } from "./Pages/routine/RoutinePage";
 
 function Router() {
   return (
@@ -25,6 +26,7 @@ function Router() {
           <Route path="/routineList" element={<RoutineList />} />
           <Route path="/createRoutine" element={<CreateRoutine />} />
           <Route path="/updateRoutine" element={<UpdateRoutine />} />
+          <Route path="/routine" element={<RoutinePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
