@@ -18,7 +18,6 @@ export const RoutinePage = () => {
     const getUserList = async () => {
       try {
         const response = await RoutineList(selectedDate);
-        console.log(selectedDate);
 
         setData(response.data);
       } catch (error) {

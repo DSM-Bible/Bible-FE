@@ -5,6 +5,7 @@ import { useState } from "react";
 import check from "../Assets/img/SVG/check.svg";
 import { Data } from "../Apis/Routine/type";
 import { useNavigate } from "react-router-dom";
+import { StartRoutine } from "../Apis/Routine";
 
 interface RoutineProps {
   value: Data;
@@ -41,12 +42,28 @@ export const Routine = ({ value, onSelect }: RoutineProps) => {
     return `${minutes}분`;
   };
 
+  const startRoutine = async () => {
+    try {
+      await StartRoutine(value.routineId);
+      console.log("성공!");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleUpdate = () => {
     navigate(`/UpdateRoutine/${value.routineId}`);
   };
 
+  const handleStart = () => {
+    startRoutine();
+    navigate(`/start/${value.routineId}`, {
+      state: { endTime: value.endTime },
+    });
+  };
+
   return (
-    <div css={Container}>
+    <div css={Container} onClick={handleStart}>
       <div css={HeaderWrapper}>
         <Font text={value.title} kind="headLine2" color="basicTextColor" />
         <div css={CheckBox(isCheck)} onClick={toggleCheck}>

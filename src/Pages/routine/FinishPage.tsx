@@ -2,20 +2,24 @@ import { Button } from "../../Components/Button";
 import { Font } from "../../Styles/Font";
 import FinishIcon from "../../Assets/img/SVG/FinishIcon.svg";
 import { css } from "@emotion/react";
+import { useLocation } from "react-router-dom";
 
 export const FinishPage = () => {
+  const location = useLocation();
+  const { endTime, actualEndTime } = location.state || {};
+
   return (
     <div css={Container}>
       <img src={FinishIcon} css={Icon} />
       <div css={TextWrapper}>
         <Font text="수고하셨어요!" kind="headLine1" color="basicTextColor" />
         <Font
-          text="목표는 00:00까지였어요"
+          text={`목표는 ${endTime}까지였어요`}
           kind="headLine2"
           color="disableGray"
         />
         <Font
-          text="실제 종료시간은 00:00이에요"
+          text={`실제 종료시간은 ${actualEndTime || "00:00"}이에요`}
           kind="headLine2"
           color="disableGray"
         />

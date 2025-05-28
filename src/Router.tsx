@@ -32,8 +32,8 @@ function Router() {
             element={<UpdateroutinePage />}
           />
           <Route path="/routine" element={<RoutinePage />} />
-          <Route path="/start" element={<StartPage />} />
-          <Route path="/finish" element={<FinishPage />} />
+          <Route path="/start/:routineId" element={<StartPage />} />
+          <Route path="/finish/:routineId" element={<FinishPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
