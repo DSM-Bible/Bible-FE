@@ -5,10 +5,12 @@ import { useRef } from "react";
 import { Font } from "../Styles/Font";
 
 interface RoutineTimeProps {
-  labelName?: string;
+  label?: string;
+  value?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const RoutineTime = ({ labelName }: RoutineTimeProps) => {
+export const RoutineTime = ({ label, value, onChange }: RoutineTimeProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
@@ -20,10 +22,18 @@ export const RoutineTime = ({ labelName }: RoutineTimeProps) => {
   return (
     <>
       <div css={Container}>
-        <Font text={labelName} kind="bodyText1" color="defaultBlack" />
+        <Font text={label} kind="bodyText1" color="defaultBlack" />
         <div css={InputBox}>
-          <img css={Img} src={RoutineTimeImg} alt=""/>
-          <input css={Input} type="time" ref={inputRef} onClick={handleClick} step="300" />
+          <img css={Img} src={RoutineTimeImg} alt="" />
+          <input
+            css={Input}
+            type="time"
+            ref={inputRef}
+            onClick={handleClick}
+            value={value}
+            step="300"
+            onChange={onChange}
+          />
         </div>
       </div>
     </>
@@ -34,6 +44,7 @@ const Container = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 340px;
   gap: 5px;
 `;
 
@@ -52,7 +63,7 @@ const Img = css`
 const Input = css`
   font-size: 15px;
   font-weight: 500;
-  width: 340px;
+  width: 100%;
   height: 50px;
   border: 1px solid ${Color.disableGray};
   border-radius: 15px;

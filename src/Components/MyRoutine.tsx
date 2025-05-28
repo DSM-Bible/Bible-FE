@@ -1,17 +1,24 @@
 import { css } from "@emotion/react";
 import { Font } from "../Styles/Font";
 import { Color } from "../Styles/Color";
+import { RoutineHistoryType } from "../Apis/Routine/type";
 
-export const MyRoutine = () => {
+type MyroutineProps = {
+  value: RoutineHistoryType;
+};
+
+export const MyRoutine = ({ value }: MyroutineProps) => {
+  const [startDate, startTime] = value.startTime.split("T");
+  const [, endTime] = value.endTime.split("T");
+
   return (
     <div css={Container}>
+      <Font text={value.title} kind="headLine2" color="basicTextColor" />
       <Font
-        text="12글자12글자루틴이름"
-        kind="headLine2"
-        color="basicTextColor"
-      />
-      <Font
-        text="2025.03.24   12:00 ~ 12:52"
+        text={`${startDate.replace(/-/g, ".")}   ${startTime.slice(
+          0,
+          5
+        )} ~ ${endTime.slice(0, 5)}`}
         kind="bodyText1"
         color="disableGray"
       />
