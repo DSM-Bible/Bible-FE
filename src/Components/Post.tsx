@@ -1,11 +1,21 @@
 import { css } from "@emotion/react";
 import { Font } from "../Styles/Font";
 
-export const Post = () => {
+interface PostProps {
+  data: {
+    id: string;
+    title: string;
+    content: string;
+    writer: string;
+    images: string;
+  }
+}
+
+export const Post = ({data}: PostProps) => {
   return (
     <div css={Container}>
-      <Font text="제목제목" kind="bodyText1" color="basicTextColor" />
-      <Font text="세쿠시걸 · 2025.03.31" kind="bodyText2" color="disableGray" />
+      <Font text={data.title} kind="bodyText1" color="basicTextColor" />
+      <Font text={data.writer} kind="bodyText2" color="disableGray" />
     </div>
   );
 };
