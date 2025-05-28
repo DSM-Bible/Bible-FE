@@ -1,22 +1,37 @@
 import { css } from "@emotion/react";
 import { Search } from "../../Components/Search";
 import BackIcon from "../../Assets/img/SVG/Back.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Font } from "../../Styles/Font";
 import { MyRoutine } from "../../Components/MyRoutine";
+import { RoutineHistory } from "../../Apis/Routine";
+import { RoutineHistoryType } from "../../Apis/Routine/type";
 
 export const RoutineList = () => {
+  const [data, setData] = useState<RoutineHistoryType[]>([]);
   const [search, setSearch] = useState("");
 
-  //   const routineList = () => {
-  //     if (!data || !data.user) return [];
-  //     if (search === "") return data.user;
-  //     return data.user.filter(
-  //       (user) =>
-  //         user.userName.toLowerCase().includes(search.toLowerCase()) ||
-  //         user.userId.toLowerCase().includes(search.toLowerCase())
-  //     );
-  //   };
+  useEffect(() => {
+    const getRoutineList = async () => {
+      try {
+        const response = await RoutineHistory();
+        setData(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getRoutineList();
+  }, []);
+
+  const routineList = () => {
+    if (!data) return [];
+    if (search === "") return data;
+    return data.filter(
+      (data) =>
+        data.title.toLowerCase().includes(search.toLowerCase()) ||
+        data.title.toLowerCase().includes(search.toLowerCase())
+    );
+  };
 
   return (
     <div css={Container}>
@@ -26,7 +41,9 @@ export const RoutineList = () => {
       </div>
       <div css={Wrapper}>
         <Search onChange={setSearch} />
-        <MyRoutine />
+        {routineList().map((value) => (
+          <MyRoutine key={value.title} value={value} />
+        ))}
       </div>
     </div>
   );

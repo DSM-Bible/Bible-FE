@@ -31,6 +31,10 @@ export type RoutineDetailResponse = {
 };
 
 export type RoutineHistoryResponse = {
+  data: RoutineHistoryType[];
+};
+
+export type RoutineHistoryType = {
   title: string;
   startTime: string;
   endTime: string;
