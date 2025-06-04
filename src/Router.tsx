@@ -12,6 +12,7 @@ import { UpdateroutinePage } from "./Pages/routine/UpdateroutinePage";
 import { RoutinePage } from "./Pages/routine/RoutinePage";
 import { StartPage } from "./Pages/routine/StartPage";
 import { FinishPage } from "./Pages/routine/FinishPage";
+import { MainPage } from "./Pages/MainPage";
 
 function Router() {
   return (
@@ -34,6 +35,7 @@ function Router() {
           <Route path="/routine" element={<RoutinePage />} />
           <Route path="/start/:routineId" element={<StartPage />} />
           <Route path="/finish/:routineId" element={<FinishPage />} />
+          <Route path="/main" element={<MainPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
