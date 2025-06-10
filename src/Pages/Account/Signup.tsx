@@ -36,6 +36,10 @@ export const Signup = () => {
   const ProfileSignup = () => {
     navigate("/Profile/Signup", { state: { id, password, nickname } });
   };
+
+  const MoveToLogin = () => {
+    navigate('/login')
+  }
   return (
     <>
       <div css={Container}>
@@ -82,9 +86,9 @@ export const Signup = () => {
           <div onClick={ProfileSignup}>
             <Button text="다음" />
           </div>
-          <div css={MoveToLogin}>
+          <div css={MoveBtn}>
             <Font text="이미 계정이 있으신가요?" />
-            <button css={Btn}>로그인</button>
+            <button css={Btn} onClick={MoveToLogin}>로그인</button>
           </div>
         </div>
       </div>
@@ -132,7 +136,7 @@ const BtnBox = css`
   gap: 20px;
 `;
 
-const MoveToLogin = css`
+const MoveBtn = css`
   display: flex;
   gap: 5px;
 `;

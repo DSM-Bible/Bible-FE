@@ -46,7 +46,7 @@ function Router() {
         <Route path="/boardlist" element={<BoardList />} />
         <Route path="/boardAdd" element={<BoardAdd />} />
         <Route path="/board/:id" element={<BoardView />} />
-        <Route path="/ScheduleAdd" element={<ScheduleAdd />} />
+        <Route path="/scheduleadd" element={<ScheduleAdd />} />
         <Route path="/calendar" element={<Schedule />} />
         <Route path="/scheduleedit" element={<ScheduleEdit />} />
       </Routes>

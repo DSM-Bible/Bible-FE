@@ -20,9 +20,9 @@ export const ProfileSignup = () => {
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
-      setProfileImg(file)
+      setProfileImg(file);
     }
-  }
+  };
 
   const handleProfileSignup = () => {
     const requestData = {
@@ -33,10 +33,13 @@ export const ProfileSignup = () => {
 
     const formData = new FormData();
 
-    formData.append("body", new Blob([JSON.stringify(requestData)], {type: "application/json"}));
+    formData.append(
+      "body",
+      new Blob([JSON.stringify(requestData)], { type: "application/json" })
+    );
 
-    if(profileImg) {
-      formData.append("file", profileImg)
+    if (profileImg) {
+      formData.append("file", profileImg);
     }
 
     SignupApi(formData)
