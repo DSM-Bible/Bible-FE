@@ -7,6 +7,7 @@ import { RoutinePeriod } from "../../Components/RoutinePeriod";
 import { Button } from "../../Components/Button";
 import { CreateRoutine } from "../../Apis/Routine";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export type RepeatPeriod =
   | "EVERY_DAY"
@@ -20,6 +21,7 @@ export const CreateRoutinePage = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [repeatPeriod, setRepeatPeriod] = useState<RepeatPeriod | null>(null);
+  const navigate = useNavigate();
 
   const handleCreateRoutine = async () => {
     if (!repeatPeriod) {
@@ -34,6 +36,7 @@ export const CreateRoutinePage = () => {
         repeatPeriod: repeatPeriod,
       });
       console.log("루틴이 성공적으로 등록되었습니다.");
+      navigate("/routine");
     } catch {
       console.error("에러에러에러에러에러엘얼ㄹ");
     }
@@ -51,7 +54,7 @@ export const CreateRoutinePage = () => {
   return (
     <div css={Container}>
       <div css={Title}>
-        <img css={Back} src={BackIcon} alt="" />
+        <img css={Back} src={BackIcon} alt="" onClick={() => navigate(-1)} />
         <Font text="루틴 생성" kind="header" color="basicTextColor" />
       </div>
       <div css={InputWrapper}>

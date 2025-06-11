@@ -121,9 +121,6 @@ export const BoardView = () => {
             <img src={board?.isLiked ? FilledLike : DefaultLike} alt="" />
             <p>{board?.likeCount ?? 0}</p>
           </div>
-          <div css={NavbarWrapper}>
-            <Navbar />
-          </div>
         </div>
       </div>
 
@@ -147,8 +144,9 @@ const Container = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin: 0 auto;
-  width: 400px;
+  width: 350px;
   min-height: 100vh;
   background-color: white;
   border-radius: 12px;

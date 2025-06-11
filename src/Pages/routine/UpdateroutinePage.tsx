@@ -81,7 +81,7 @@ export const UpdateroutinePage = () => {
   return (
     <div css={Container}>
       <div css={Title}>
-        <img css={Back} src={BackIcon} alt="" />
+        <img css={Back} src={BackIcon} alt="" onClick={() => navigate(-1)} />
         <Font text="루틴 수정" kind="header" color="basicTextColor" />
       </div>
       <div css={InputWrapper}>

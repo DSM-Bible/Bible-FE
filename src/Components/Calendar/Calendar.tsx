@@ -1,12 +1,12 @@
 import { useState } from "react";
-import * as S from './style';
-import { Font } from '../../Styles/Font';
+import * as S from "./style";
+import { Font } from "../../Styles/Font";
 import leftArrow from "../../Assets/img/SVG/leftArrow.svg";
-import rightArrow from "../../Assets/img/SVG/rightArrow.svg"
+import rightArrow from "../../Assets/img/SVG/rightArrow.svg";
 
 const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 
-const Calendar = ({onDateSelect, }: any) => {
+const Calendar = ({ onDateSelect }: any) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -42,15 +42,25 @@ const Calendar = ({onDateSelect, }: any) => {
     return weeks;
   };
 
-  const handleMonthChange = (direction: 'prev' | 'next') => {
-    setCurrentDate(prevDate => new Date(prevDate.getFullYear(), prevDate.getMonth() + (direction === 'prev' ? -1 : 1), 1));
+  const handleMonthChange = (direction: "prev" | "next") => {
+    setCurrentDate(
+      (prevDate) =>
+        new Date(
+          prevDate.getFullYear(),
+          prevDate.getMonth() + (direction === "prev" ? -1 : 1),
+          1
+        )
+    );
   };
 
-  const isToday = (date: Date) => new Date().toDateString() === date.toDateString();
+  const isToday = (date: Date) =>
+    new Date().toDateString() === date.toDateString();
   const isPastDate = (date: Date) => date < new Date();
-  const isCurrentMonth = (date: Date) => date.getMonth() === currentDate.getMonth();
-  const isSelectedDate = (date: Date) => selectedDate?.toDateString() === date.toDateString();
-  
+  const isCurrentMonth = (date: Date) =>
+    date.getMonth() === currentDate.getMonth();
+  const isSelectedDate = (date: Date) =>
+    selectedDate?.toDateString() === date.toDateString();
+
   const handleDateClick = (date: Date) => {
     setSelectedDate(date);
     onDateSelect(date);
@@ -62,11 +72,11 @@ const Calendar = ({onDateSelect, }: any) => {
   return (
     <S.Container>
       <S.CalendarShiftWrap>
-        <div onClick={() => handleMonthChange('prev')}>
+        <div onClick={() => handleMonthChange("prev")}>
           <img src={leftArrow} alt="" />
         </div>
         <Font kind={"headLine1"} text={`${year}년 ${month + 1}월`} />
-        <div onClick={() => handleMonthChange('next')}>
+        <div onClick={() => handleMonthChange("next")}>
           <img src={rightArrow} alt="" />
         </div>
       </S.CalendarShiftWrap>
@@ -82,7 +92,7 @@ const Calendar = ({onDateSelect, }: any) => {
           <S.Week key={weekIndex}>
             {week.map((date, dateIndex) => (
               <S.Date
-                key={dateIndex}                
+                key={dateIndex}
                 onClick={() => handleDateClick(date)}
                 isToday={isToday(date)}
                 isPast={isPastDate(date)}
@@ -90,7 +100,7 @@ const Calendar = ({onDateSelect, }: any) => {
                 isSelected={isSelectedDate(date)}
               >
                 {date.getDate().toString()}
-              </S.Date>              
+              </S.Date>
             ))}
           </S.Week>
         ))}
@@ -100,4 +110,3 @@ const Calendar = ({onDateSelect, }: any) => {
 };
 
 export default Calendar;
-

@@ -22,7 +22,7 @@ export const Login = () => {
     })
       .then((res) => {
         Cookie.set("token", res.data.token);
-        navigate("/");
+        navigate("/main");
       })
       .catch((err) => {
         console.error(err);

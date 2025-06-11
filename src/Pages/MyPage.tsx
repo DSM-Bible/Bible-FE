@@ -6,16 +6,18 @@ import profileEdit from "../Assets/img/SVG/profileEdit.svg";
 import { useEffect, useRef, useState } from "react";
 import DefaultProfileImg from "../Assets/img/SVG/DefaultProfileImg.svg";
 import { UserInfo, UserUpdate } from "../Apis/account";
+import { useNavigate } from "react-router-dom";
+import { Cookie } from "../Utils/cookie";
 
 const Social = [
-  { title: "친구 추가" },
-  { title: "친구 관리" },
-  { title: "루틴 활동 기록" },
+  { title: "친구 추가", root: "/AddFriend" },
+  { title: "친구 관리", root: "/manageFriend" },
+  { title: "루틴 활동 기록", root: "/routineList" },
 ];
 const setting = [
   { title: "자주 묻는 질문" },
   { title: "버그 제보" },
-  { title: "고객센터" },
+  { title: "로그아웃" },
 ];
 
 export const MyPage = () => {
@@ -25,6 +27,7 @@ export const MyPage = () => {
   const [userId, setUserId] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -96,6 +99,11 @@ export const MyPage = () => {
     await UserUpdate(formData);
   };
 
+  const handleLogout = () => {
+    Cookie.remove("token");
+    navigate("/");
+  };
+
   return (
     <div css={Container}>
       <div css={Profile}>
@@ -144,6 +152,7 @@ export const MyPage = () => {
               text={element.title}
               kind="bodyTItle"
               color="defaultBlack"
+              onClick={() => navigate(element.root)}
             />
           ))}
         </div>
@@ -159,6 +168,7 @@ export const MyPage = () => {
               text={element.title}
               kind="bodyTItle"
               color="defaultBlack"
+              onClick={element.title === "로그아웃" ? handleLogout : undefined}
             />
           ))}
         </div>

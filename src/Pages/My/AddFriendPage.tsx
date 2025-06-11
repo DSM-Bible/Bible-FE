@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import { AddFriendBar } from "../../Components/AddFriendBar";
 import { UserList } from "../../Apis/Friend";
 import { UserListResponse } from "../../Apis/Friend/type";
+import { useNavigate } from "react-router-dom";
 
 export const AddFriendPage = () => {
   const [data, setData] = useState<UserListResponse | null>(null);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUserList = async () => {
@@ -36,7 +38,7 @@ export const AddFriendPage = () => {
   return (
     <div css={Container}>
       <div css={Title}>
-        <img css={Back} src={BackIcon} alt="" />
+        <img css={Back} src={BackIcon} alt="" onClick={() => navigate(-1)} />
         <Font text="친구 추가" kind="header" color="basicTextColor" />
       </div>
       <div css={Wrapper}>

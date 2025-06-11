@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 import { CheckModal } from "../../Components/CheckModal";
 import { DeleteRoutine, RoutineList } from "../../Apis/Routine";
 import { RoutineListResponse } from "../../Apis/Routine/type";
+import { useNavigate } from "react-router-dom";
 
 export const RoutinePage = () => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState<RoutineListResponse | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!selectedDate) return;
@@ -61,7 +63,12 @@ export const RoutinePage = () => {
             color="basicTextColor"
           />
           <div css={ButtonWrapper}>
-            <Font text="추가" kind="bodyText1" color="basicTextColor" />
+            <Font
+              text="추가"
+              kind="bodyText1"
+              color="basicTextColor"
+              onClick={() => navigate("/createRoutine")}
+            />
             <div onClick={() => setShowModal(true)}>
               <Font text="삭제" kind="bodyText1" color="defaultRed" />
             </div>

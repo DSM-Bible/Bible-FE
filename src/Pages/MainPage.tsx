@@ -6,9 +6,11 @@ import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { RoutineList } from "../Apis/Routine";
 import { RoutineListResponse } from "../Apis/Routine/type";
+import { UserInfo, UserInfoResponse } from "../Apis/account";
 
 export const MainPage = () => {
   const [data, setData] = useState<RoutineListResponse | null>(null);
+  const [info, setInfo] = useState<UserInfoResponse | null>(null);
 
   const getToday = () => {
     const today = new Date();
@@ -19,7 +21,19 @@ export const MainPage = () => {
   };
 
   useEffect(() => {
-    const getUserList = async () => {
+    const getUserInfo = async () => {
+      try {
+        const response = await UserInfo();
+        setInfo(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getUserInfo();
+  }, []);
+
+  useEffect(() => {
+    const getRoutineList = async () => {
       try {
         const response = await RoutineList(getToday());
 
@@ -28,12 +42,16 @@ export const MainPage = () => {
         console.error(error);
       }
     };
-    getUserList();
+    getRoutineList();
   }, []);
 
   return (
     <div css={Container}>
-      <Font text="반가워요 섹시걸님!" kind="headLine1" color="basicTextColor" />
+      <Font
+        text={`반가워요 ${info?.nickname}님!`}
+        kind="headLine1"
+        color="basicTextColor"
+      />
       <Font
         text="오늘도 힘내서 갓생을 살아봅시다!"
         kind="headLine2"
@@ -63,7 +81,7 @@ export const MainPage = () => {
         />
       </div>
       <Font text="오늘의 루틴" kind="bodyTItle" color="basicTextColor" />
-      <TodayRoutine routine={data?.data?.[0]} />
+      <TodayRoutine routine={data?.data?.[1]} />
     </div>
   );
 };

@@ -63,16 +63,21 @@ export const Routine = ({ value, onSelect }: RoutineProps) => {
   };
 
   return (
-    <div css={Container} onClick={handleStart}>
+    <div css={Container}>
       <div css={HeaderWrapper}>
-        <Font text={value.title} kind="headLine2" color="basicTextColor" />
+        <Font
+          text={value.title}
+          kind="headLine2"
+          color="basicTextColor"
+          onClick={handleStart}
+        />
         <div css={CheckBox(isCheck)} onClick={toggleCheck}>
           {isCheck && <img src={check} />}
         </div>
       </div>
       <div css={ContentWrapper}>
         <div css={InfoWrapper}>
-          <div css={Info}>
+          <div css={Info} onClick={handleStart}>
             <Font text="목표 시간" kind="bodyText2" color="disableGray" />
             <Font
               text={getDurationText(value.startTime, value.endTime)}
@@ -80,7 +85,7 @@ export const Routine = ({ value, onSelect }: RoutineProps) => {
               color="basicTextColor"
             />
           </div>
-          <div css={Info}>
+          <div css={Info} onClick={handleStart}>
             <Font text="루틴 기간" kind="bodyText2" color="disableGray" />
             <Font
               text={`${value.startTime}~${value.endTime}`}

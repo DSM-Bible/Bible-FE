@@ -3,9 +3,8 @@ import PostAddImg from "../../Assets/img/SVG/PostAddImg.svg";
 import { Input } from "../../Components/Input";
 import { css } from "@emotion/react";
 import { Button } from "../../Components/Button";
-import { Navbar } from "../../Components/Navbar";
 import { Color } from "../../Styles/Color";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { BoardApi } from "../../Apis/board";
 import { useNavigate } from "react-router-dom";
 
@@ -14,11 +13,22 @@ export const BoardAdd = () => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>(PostAddImg);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null;
-    setFile(selectedFile);
+    if (selectedFile) {
+      setFile(selectedFile);
+
+      const imageUrl = URL.createObjectURL(selectedFile);
+      setPreviewUrl(imageUrl);
+    }
+  };
+
+  const handleImageClick = () => {
+    fileInputRef.current?.click();
   };
 
   const handleSubmit = async () => {
@@ -38,13 +48,12 @@ export const BoardAdd = () => {
     }
 
     BoardApi(formData)
-    .then(() => {
-      navigate("/boardlist", { state: { fromAdd: true } });
-    })
-    .catch((err) => {
-      console.error(err);
-      
-    })
+      .then(() => {
+        navigate("/boardlist", { state: { fromAdd: true } });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
@@ -53,14 +62,20 @@ export const BoardAdd = () => {
         <Header FontText="게시글 작성" />
         <div css={ContentBox}>
           <div css={ImgBox}>
-            <label htmlFor="">사진</label>
+            <label>사진</label>
             <input
-              id="imgUpload"
               type="file"
               accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              onChange={handleFileChange}
+              ref={fileInputRef}
+              style={{ display: "none" }}
             />
-            <img src={PostAddImg} alt="" />
+            <img
+              src={previewUrl}
+              alt="업로드"
+              onClick={handleImageClick}
+              css={Image}
+            />
           </div>
           <Input
             type={"text"}
@@ -75,7 +90,6 @@ export const BoardAdd = () => {
             onChange={(e) => setContent(e.target.value)}
           ></textarea>
           <Button text="게시글 저장" onClick={handleSubmit} />
-          <Navbar />
         </div>
       </div>
     </>
@@ -112,4 +126,13 @@ const TextArea = css`
   border-radius: 15px;
   outline: none;
   padding: 16px 20px;
+`;
+
+const Image = css`
+  width: 340px;
+  height: 185px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid #ffffff;
 `;

@@ -44,7 +44,7 @@ export const ProfileSignup = () => {
 
     SignupApi(formData)
       .then(() => {
-        navigate("/login");
+        navigate("/");
       })
       .catch((error) => {
         console.error("회원가입 오류:", error);
