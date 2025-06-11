@@ -12,6 +12,13 @@ import { UpdateroutinePage } from "./Pages/routine/UpdateroutinePage";
 import { RoutinePage } from "./Pages/routine/RoutinePage";
 import { StartPage } from "./Pages/routine/StartPage";
 import { FinishPage } from "./Pages/routine/FinishPage";
+import { MainPage } from "./Pages/MainPage";
+import { BoardList } from "./Pages/Board/list";
+import { BoardAdd } from "./Pages/Board/add";
+import { BoardView } from "./Pages/Board/view";
+import { ScheduleAdd } from "./Pages/Schedule/Add";
+import { Schedule } from "./Pages/Schedule/Calendar";
+import { ScheduleEdit } from "./Pages/Schedule/edit";
 
 function Router() {
   return (
@@ -34,7 +41,14 @@ function Router() {
           <Route path="/routine" element={<RoutinePage />} />
           <Route path="/start/:routineId" element={<StartPage />} />
           <Route path="/finish/:routineId" element={<FinishPage />} />
+          <Route path="/main" element={<MainPage />} />
         </Route>
+        <Route path="/boardlist" element={<BoardList />} />
+        <Route path="/boardAdd" element={<BoardAdd />} />
+        <Route path="/board/:id" element={<BoardView />} />
+        <Route path="/scheduleadd" element={<ScheduleAdd />} />
+        <Route path="/calendar" element={<Schedule />} />
+        <Route path="/scheduleedit" element={<ScheduleEdit />} />
       </Routes>
     </BrowserRouter>
   );

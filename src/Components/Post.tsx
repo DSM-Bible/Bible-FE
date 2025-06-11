@@ -1,11 +1,17 @@
 import { css } from "@emotion/react";
 import { Font } from "../Styles/Font";
+import { Data } from "../Apis/board";
 
-export const Post = () => {
+interface PostProps {
+  list: Data;
+  onClick?: () => void;
+}
+
+export const Post = ({list, onClick}: PostProps) => {
   return (
-    <div css={Container}>
-      <Font text="제목제목" kind="bodyText1" color="basicTextColor" />
-      <Font text="세쿠시걸 · 2025.03.31" kind="bodyText2" color="disableGray" />
+    <div css={Container} onClick={onClick}>
+      <Font text={list.title} kind="bodyText1" color="basicTextColor" />
+      <Font text={list.userName} kind="bodyText2" color="disableGray" />
     </div>
   );
 };
