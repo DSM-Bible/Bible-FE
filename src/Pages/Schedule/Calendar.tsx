@@ -1,31 +1,35 @@
 import { css } from "@emotion/react";
 import Calendar from "../../Components/Calendar/Calendar";
 import { Font } from "../../Styles/Font";
-import { Navbar } from "../../Components/Navbar";
 import plus from "../../Assets/img/SVG/plus.svg";
 import edit from "../../Assets/img/SVG/edit.svg";
 import minus from "../../Assets/img/SVG/delete.svg";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DeleteSchedule, GetAllSchedules, ScheduleItem } from "../../Apis/calendar";
+import {
+  DeleteSchedule,
+  GetAllSchedules,
+  ScheduleItem,
+} from "../../Apis/calendar";
 
 export const Schedule = () => {
   const navigate = useNavigate();
-  const [isChecked, setIsChecked] = useState(false);
   const [scheduleList, setScheduleList] = useState<ScheduleItem[]>([]);
-  const [checkedMap, setCheckedMap] = useState<{[key: string]: boolean}>({});
+  const [checkedMap, setCheckedMap] = useState<{ [key: string]: boolean }>({});
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await GetAllSchedules();
+        const dateStr = formatDate(selectedDate);
+        const res = await GetAllSchedules(dateStr);
         setScheduleList(res.data.data);
       } catch (err) {
         console.error(err);
       }
     };
     fetchData();
-  }, []);
+  }, [selectedDate]);
 
   const MoveAdd = () => {
     navigate("/scheduleadd");
@@ -35,27 +39,35 @@ export const Schedule = () => {
     setCheckedMap((prev) => ({
       ...prev,
       [id]: !prev[id],
-    }))
-  }
+    }));
+  };
 
   const handleDelete = async (id: string) => {
-    console.log(id);
-    
     try {
       await DeleteSchedule(id);
-      const res = await GetAllSchedules();
+      const res = await GetAllSchedules(formatDate(selectedDate));
       setScheduleList(res.data.data);
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     }
-  }
+  };
 
-  const getTodayString = () => {
-    const today = new Date();
-    const month = today.getMonth() + 1;
-    const date = today.getDate();
-    return `${month}월 ${date}일 일정`
-  }
+  const formatDate = (date: Date) => {
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, "0");
+    const day = `${date.getDate()}`.padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const getDisplayDate = () => {
+    const month = selectedDate.getMonth() + 1;
+    const date = selectedDate.getDate();
+    return `${month}월 ${date}일 일정`;
+  };
+
+  const handleDateSelect = (date: Date) => {
+    setSelectedDate(date);
+  };
 
   return (
     <>
@@ -69,16 +81,16 @@ export const Schedule = () => {
               color={"disableGray"}
             />
           </div>
-          <Calendar />
+          <Calendar onDateSelect={handleDateSelect} />
           <div css={TodayCheckBox}>
             <div css={TodayCheckTitle}>
               <Font
-                text={getTodayString()}
+                text={getDisplayDate()}
                 kind={"headLine2"}
                 color={"defaultBlack"}
               />
               <button css={PlusBtn} onClick={MoveAdd}>
-                <img src={plus} alt="" />
+                <img src={plus} alt="추가" />
               </button>
             </div>
             {scheduleList.map((item) => (
@@ -89,22 +101,21 @@ export const Schedule = () => {
                     checked={!!checkedMap[item.id]}
                     onChange={() => handleChecked(item.id)}
                   />
-                  <span css={CheckText(!!checkedMap[item.id])}>{item.title}</span>
+                  <span css={CheckText(!!checkedMap[item.id])}>
+                    {item.title}
+                  </span>
                 </div>
                 <div css={CheckImg}>
                   <button>
-                    <img src={edit} alt="" />
+                    <img src={edit} alt="수정" />
                   </button>
                   <button onClick={() => handleDelete(item.id)}>
-                    <img src={minus} alt="" />
+                    <img src={minus} alt="삭제" />
                   </button>
                 </div>
               </div>
             ))}
           </div>
-          <nav css={Navbox}>
-            <Navbar />
-          </nav>
         </div>
       </div>
     </>
@@ -138,13 +149,16 @@ const FontBox = css`
 const TodayCheckBox = css`
   display: flex;
   flex-direction: column;
+  width: 80%;
+  justify-content: space-between;
   gap: 25px;
 `;
 
 const TodayCheckTitle = css`
   display: flex;
   width: 100%;
-  gap: 200px;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const PlusBtn = css`
@@ -177,11 +191,4 @@ const CheckImg = css`
     border: none;
     cursor: pointer;
   }
-`;
-
-const Navbox = css`
-  width: 100%;
-  background-color: white;
-  position: fixed;
-  bottom: 0;
 `;

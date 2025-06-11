@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 import { Header } from "../../Components/Header";
 import { Post } from "../../Components/Post";
 import { Color } from "../../Styles/Color";
-import { Navbar } from "../../Components/Navbar";
 import AddPost from "../../Assets/img/SVG/boradListAddPost.svg";
 import { GetBoardList, Data } from "../../Apis/board";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const BoardList = () => {
   const navigate = useNavigate();
@@ -15,16 +14,15 @@ export const BoardList = () => {
 
   useEffect(() => {
     const getList = async () => {
-      try{
+      try {
         const response = await GetBoardList(selectedFilter);
         setPosts(response.data.data.list);
-      }
-      catch (error) {
+      } catch (error) {
         console.error(error);
       }
-    }
+    };
     getList();
-  }, [selectedFilter])
+  }, [selectedFilter]);
 
   const MoveAdd = () => {
     navigate("/boardadd");
@@ -54,15 +52,16 @@ export const BoardList = () => {
           <div css={PostWrapper}>
             {Array.isArray(posts) &&
               posts.map((post, i) => (
-                <Post key={`post-${post.id}-${i}`} list={post} onClick={() => navigate(`/board/${post.id}`)} />
+                <Post
+                  key={`post-${post.id}-${i}`}
+                  list={post}
+                  onClick={() => navigate(`/board/${post.id}`)}
+                />
               ))}
           </div>
           <div css={AddBtn} onClick={MoveAdd}>
             <img src={AddPost} alt="글쓰기 버튼" />
           </div>
-          <nav css={NavbarBox}>
-            <Navbar />
-          </nav>
         </div>
       </div>
     </>
@@ -91,9 +90,8 @@ const ContentBox = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 160px;
-  margin-bottom: 70px;
   width: 400px;
+  height: 600px;
   gap: 20px;
 `;
 
@@ -124,8 +122,9 @@ const PostWrapper = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-start;
   width: 100%;
+  margin-top: 60px;
 `;
 
 const AddBtn = css`
@@ -141,12 +140,4 @@ const AddBtn = css`
   justify-content: center;
   align-items: center;
   z-index: 100;
-`;
-
-const NavbarBox = css`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: white
 `;

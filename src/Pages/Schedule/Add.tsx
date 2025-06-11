@@ -2,8 +2,6 @@ import { css } from "@emotion/react";
 import { Button } from "../../Components/Button";
 import { Header } from "../../Components/Header";
 import { RoutineInput } from "../../Components/RoutineInput";
-import { RoutineTime } from "../../Components/RoutineTime";
-import { Navbar } from "../../Components/Navbar";
 import { useState } from "react";
 import { Add } from "../../Apis/calendar";
 import { Color } from "../../Styles/Color";
@@ -24,12 +22,7 @@ export const ScheduleAdd = () => {
         remind: Number(remind),
       });
       console.log(startTime);
-      navigate("/calendar")
-      // console.log({
-      //   title,
-      //   startTime: startTime.replace("T", " "),
-      //   remind: Number(remind)
-      // });
+      navigate("/calendar");
     } catch (err) {
       console.error(err);
     }
@@ -47,7 +40,7 @@ export const ScheduleAdd = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
             <div>
-              <Font text="알림 시간" kind="bodyText1" color={"defaultBlack"} />
+              <Font text="시작 시간" kind="bodyText1" color={"defaultBlack"} />
               <input
                 css={StartTime}
                 type="datetime-local"
@@ -62,10 +55,7 @@ export const ScheduleAdd = () => {
               onChange={(e) => setRemind(e.target.value)}
             />
           </div>
-          <nav css={Nav}>
-            <Button text="일정 생성" onClick={handleSubmit} />
-            <Navbar />
-          </nav>
+          <Button text="일정 생성" onClick={handleSubmit} />
         </div>
       </div>
     </>
@@ -87,7 +77,7 @@ const ContentBox = css`
   align-items: center;
   justify-content: center;
   width: 400px;
-  gap: 25px;
+  gap: 230px;
 `;
 
 const InputBox = css`
@@ -109,12 +99,4 @@ const StartTime = css`
   &::placeholder {
     color: black;
   }
-`;
-
-const Nav = css`
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  position: absolute;
-  bottom: 0px;
 `;

@@ -6,39 +6,20 @@ import { Button } from "../../Components/Button";
 import { Color } from "../../Styles/Color";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { SignupApi } from "../../Apis/account";
 
 export const Signup = () => {
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
-  const [nickname, setNickname] = useState("");
-
-  const handleSignup = () => {
-    const formData = new FormData();
-    const json = JSON.stringify({
-      id,
-      password,
-      nickname,
-    });
-
-    formData.append(
-      "body",
-      new Blob([json], {
-        type: "application/json",
-      })
-    );
-
-    SignupApi(formData);
-  };
+  const [nickname, ] = useState("");
 
   const ProfileSignup = () => {
     navigate("/Profile/Signup", { state: { id, password, nickname } });
   };
 
   const MoveToLogin = () => {
-    navigate('/login')
+    navigate('/')
   }
   return (
     <>

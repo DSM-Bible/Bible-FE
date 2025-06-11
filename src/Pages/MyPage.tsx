@@ -6,11 +6,12 @@ import profileEdit from "../Assets/img/SVG/profileEdit.svg";
 import { useEffect, useRef, useState } from "react";
 import DefaultProfileImg from "../Assets/img/SVG/DefaultProfileImg.svg";
 import { UserInfo, UserUpdate } from "../Apis/account";
+import { useNavigate } from "react-router-dom";
 
 const Social = [
-  { title: "친구 추가" },
-  { title: "친구 관리" },
-  { title: "루틴 활동 기록" },
+  { title: "친구 추가", root: "/AddFriend" },
+  { title: "친구 관리", root: "/manageFriend" },
+  { title: "루틴 활동 기록", root: "/routineList" },
 ];
 const setting = [
   { title: "자주 묻는 질문" },
@@ -25,6 +26,7 @@ export const MyPage = () => {
   const [userId, setUserId] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -144,6 +146,7 @@ export const MyPage = () => {
               text={element.title}
               kind="bodyTItle"
               color="defaultBlack"
+              onClick={() => navigate(element.root)}
             />
           ))}
         </div>

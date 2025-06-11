@@ -2,11 +2,12 @@ import { Button } from "../../Components/Button";
 import { Font } from "../../Styles/Font";
 import FinishIcon from "../../Assets/img/SVG/FinishIcon.svg";
 import { css } from "@emotion/react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const FinishPage = () => {
   const location = useLocation();
   const { endTime, actualEndTime } = location.state || {};
+  const navigate = useNavigate();
 
   return (
     <div css={Container}>
@@ -24,7 +25,7 @@ export const FinishPage = () => {
           color="disableGray"
         />
       </div>
-      <Button text="확인" />
+      <Button text="확인" onClick={() => navigate("/routine")} />
     </div>
   );
 };

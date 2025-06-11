@@ -6,10 +6,12 @@ import { Font } from "../../Styles/Font";
 import { MyRoutine } from "../../Components/MyRoutine";
 import { RoutineHistory } from "../../Apis/Routine";
 import { RoutineHistoryType } from "../../Apis/Routine/type";
+import { useNavigate } from "react-router-dom";
 
 export const RoutineList = () => {
   const [data, setData] = useState<RoutineHistoryType[]>([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getRoutineList = async () => {
@@ -36,7 +38,7 @@ export const RoutineList = () => {
   return (
     <div css={Container}>
       <div css={Title}>
-        <img css={Back} src={BackIcon} alt="" />
+        <img css={Back} src={BackIcon} alt="" onClick={() => navigate(-1)} />
         <Font text="루틴 기록" kind="header" color="basicTextColor" />
       </div>
       <div css={Wrapper}>

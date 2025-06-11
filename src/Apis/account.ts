@@ -9,7 +9,7 @@ interface LoginResponse {
   token: string;
 }
 
-interface UserInfoResponse {
+export interface UserInfoResponse {
   userId: string;
   nickname: string;
   profile: string;

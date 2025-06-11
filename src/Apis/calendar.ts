@@ -36,8 +36,8 @@ export const Add = async (data: AddProps) => {
   return await instance.post("/calender", data);
 };
 
-export const GetAllSchedules = async () => {
-  return await instance.get<ScheduleListResponse>("/calender/list");
+export const GetAllSchedules = async (date: string) => {
+  return await instance.get<ScheduleListResponse>(`/calender/list/${date}`);
 };
 
 export const GetList = async (cal_id: number) => {

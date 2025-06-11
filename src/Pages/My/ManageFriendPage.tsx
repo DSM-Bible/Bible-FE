@@ -6,10 +6,12 @@ import { Font } from "../../Styles/Font";
 import { useEffect, useState } from "react";
 import { FriendListResponse } from "../../Apis/Friend/type";
 import { FriendList } from "../../Apis/Friend";
+import { useNavigate } from "react-router-dom";
 
 export const ManageFriendPage = () => {
   const [data, setData] = useState<FriendListResponse | null>(null);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getFriendList = async () => {
@@ -36,7 +38,7 @@ export const ManageFriendPage = () => {
   return (
     <div css={Container}>
       <div css={Title}>
-        <img css={Back} src={BackIcon} alt="" />
+        <img css={Back} src={BackIcon} alt="" onClick={() => navigate(-1)} />
         <Font text="친구 관리" kind="header" color="basicTextColor" />
       </div>
       <div css={Wrapper}>
