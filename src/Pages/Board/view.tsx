@@ -5,61 +5,94 @@ import Profile from "../../Assets/img/SVG/DefaultProfileImg.svg";
 import { Font } from "../../Styles/Font";
 import { Navbar } from "../../Components/Navbar";
 import DefaultLike from "../../Assets/img/SVG/DefaultLike.svg";
-import FilledLike from "../../Assets/img/SVG/ClickedLike.svg"
+import FilledLike from "../../Assets/img/SVG/ClickedLike.svg";
 import { Color } from "../../Styles/Color";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { BoardViewResponse, DeleteBoardLike, GetBoardView, PostBoardLike } from "../../Apis/board";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  BoardViewResponse,
+  DeleteBoard,
+  DeleteBoardLike,
+  GetBoardView,
+  PatchBoardEdit,
+  PostBoardLike,
+} from "../../Apis/board";
 
 export const BoardView = () => {
   const { id } = useParams<{ id: string }>();
   const [board, setBoard] = useState<BoardViewResponse>();
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if(!id) return;
+    if (!id) return;
 
     GetBoardView(id)
-    .then(res => {
-      const data = res.data.data
-      setBoard(data)
-    })
-    .catch(err => {
+      .then((res) => {
+        const data = res.data.data;
+        setBoard(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [id]);
+
+  const handleLike = async () => {
+    if (!id || !board) return;
+
+    const prevBoard = { ...board };
+
+    const isLikedNow = !board.isLiked;
+
+    setBoard({
+      ...board,
+      data: {
+        ...board.data,
+        isLiked: !board.isLiked,
+        likeCount: board.likeCount + (board.isLiked ? -1 : 1),
+      },
+    });
+
+    try {
+      if (isLikedNow) {
+        await PostBoardLike(id);
+      } else {
+        await DeleteBoardLike(id);
+      }
+
+      const res = await GetBoardView(id);
+      setBoard(res.data.data);
+    } catch (err) {
       console.error(err);
-    })
-  }, [id])
-  
-
-const handleLike = async () => { 
-  if(!id || !board) return;
-
-  const prevBoard = {...board};
-
-  const isLikedNow = !board.isLiked;
-
-  setBoard({
-    ...board,    
-    data: {
-      ...board.data,
-      isLiked: !board.isLiked,
-      likeCount: board.likeCount + (board.isLiked ? -1 : 1)
+      setBoard(prevBoard);
     }
-  });
+  };
 
-  try {
-    if (isLikedNow) {
-      await PostBoardLike(id)
-    } else {
-      await DeleteBoardLike(id)
+  const handleDetailClick = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const handleEdit = () => {
+    if(!id) return;
+    navigate(`/board/edit/${board?.id}`);
+    setShowModal(false);
+  };
+
+  const handleDelete = async () => {
+    if(!id) return;
+    console.log(id);
+    try {
+      await DeleteBoard(id);
+      setShowModal(false);
+      navigate("/boardlist")
+    } catch(err) {
+      console.error(err);
     }
-
-    const res = await GetBoardView(id);
-    setBoard(res.data.data)
-  } catch(err) {
-    console.error(err);
-    setBoard(prevBoard)
-  }
-};
-
+  };
 
   return (
     <>
@@ -73,9 +106,15 @@ const handleLike = async () => {
                 <p>{board?.userName}</p>
               </div>
             </div>
-            <img src={ViewDetail} alt="" />
+            <button css={DetailBtn} onClick={handleDetailClick}>
+              <img src={ViewDetail} alt="" />
+            </button>
           </div>
-          <Font text={board?.title ?? "제목 없음"} kind="bodyTItle" color={"defaultBlack"} />
+          <Font
+            text={board?.title ?? "제목 없음"}
+            kind="bodyTItle"
+            color={"defaultBlack"}
+          />
           {board?.fileUrl && <img src={board.fileUrl} />}
           <p css={ContentText}>{board?.content}</p>
           <div css={LikeBtn} onClick={handleLike}>
@@ -87,6 +126,19 @@ const handleLike = async () => {
           </div>
         </div>
       </div>
+
+      {showModal && (
+        <div css={ModalOverlay} onClick={closeModal}>
+          <div css={ModalBox} onClick={(e) => e.stopPropagation()}>
+            <button css={ModalButton} onClick={handleEdit}>
+              수정
+            </button>
+            <button css={[ModalButton, DeleteButton]} onClick={handleDelete}>
+              삭제
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
@@ -115,7 +167,7 @@ const NavbarWrapper = css`
   position: absolute;
   bottom: 0;
   justify-content: center;
-  padding: 16px 0;
+  padding: 8px 0;
   width: 100%;
   border-top: 1px solid #e0e0e0;
 `;
@@ -150,4 +202,50 @@ const LikeBtn = css`
   > p {
     ${Color.disableGray}
   }
+`;
+
+const DetailBtn = css`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+`;
+
+const ModalOverlay = css`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+`;
+
+const ModalBox = css`
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  width: 120px;
+`;
+
+const ModalButton = css`
+  padding: 12px;
+  border: none;
+  background: white;
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+  &:hover {
+    background: #f5f5f5;
+  }
+`;
+
+const DeleteButton = css`
+  color: red;
 `;

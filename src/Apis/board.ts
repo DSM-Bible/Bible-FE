@@ -11,7 +11,7 @@ export interface Data {
 export interface BoardListResponse {
   data: {
     list: Data[];
-  }
+  };
 }
 
 export interface BoardViewResponse {
@@ -24,8 +24,7 @@ export interface BoardViewResponse {
     fileUrl: string;
     likeCount: number;
     isLiked: boolean;
-  }
-    
+  };
 }
 
 export const BoardApi = async (data: FormData) => {
@@ -38,18 +37,30 @@ export const BoardApi = async (data: FormData) => {
 
 export const GetBoardList = async (selectType: 1 | 2) => {
   return await instance.get<BoardListResponse>(`/board/list`, {
-    params: {selectType}
+    params: { selectType },
   });
 };
 
 export const GetBoardView = async (id: string) => {
-  return await instance.get<BoardViewResponse>(`/board/${id}`)
-}
+  return await instance.get<BoardViewResponse>(`/board/${id}`);
+};
+
+export const PatchBoardEdit = async (id: string, formData: FormData) => {
+  return await instance.patch(`/board/edit/${id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+export const DeleteBoard = async (id: string) => {
+  return await instance.delete(`/board/${id}`);
+};
 
 export const PostBoardLike = async (id: string) => {
   return instance.post(`/board/${id}/like`);
 };
 
 export const DeleteBoardLike = async (id: string) => {
-  return instance.delete(`/board/${id}/like`)
-}
+  return instance.delete(`/board/${id}/like`);
+};

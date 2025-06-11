@@ -19,6 +19,7 @@ import { BoardView } from "./Pages/Board/view";
 import { ScheduleAdd } from "./Pages/Schedule/Add";
 import { Schedule } from "./Pages/Schedule/Calendar";
 import { ScheduleEdit } from "./Pages/Schedule/edit";
+import { BoardEdit } from "./Pages/Board/edit";
 
 function Router() {
   return (
@@ -46,6 +47,7 @@ function Router() {
         <Route path="/boardlist" element={<BoardList />} />
         <Route path="/boardAdd" element={<BoardAdd />} />
         <Route path="/board/:id" element={<BoardView />} />
+        <Route path="/board/edit/:id" element={<BoardEdit />} />
         <Route path="/scheduleadd" element={<ScheduleAdd />} />
         <Route path="/calendar" element={<Schedule />} />
         <Route path="/scheduleedit" element={<ScheduleEdit />} />
