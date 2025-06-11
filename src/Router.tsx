@@ -18,6 +18,7 @@ import { BoardAdd } from "./Pages/Board/add";
 import { BoardView } from "./Pages/Board/view";
 import { ScheduleAdd } from "./Pages/Schedule/Add";
 import { Schedule } from "./Pages/Schedule/Calendar";
+import { ScheduleEdit } from "./Pages/Schedule/edit";
 
 function Router() {
   return (
@@ -45,6 +46,7 @@ function Router() {
           <Route path="/board/:id" element={<BoardView />} />
           <Route path="/scheduleadd" element={<ScheduleAdd />} />
           <Route path="/calendar" element={<Schedule />} />
+          <Route path="/scheduleEdit/:id" element={<ScheduleEdit />} />
         </Route>
       </Routes>
     </BrowserRouter>

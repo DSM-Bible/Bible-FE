@@ -106,7 +106,7 @@ export const Schedule = () => {
                   </span>
                 </div>
                 <div css={CheckImg}>
-                  <button>
+                  <button onClick={() => navigate(`/scheduleEdit/${item.id}`)}>
                     <img src={edit} alt="수정" />
                   </button>
                   <button onClick={() => handleDelete(item.id)}>

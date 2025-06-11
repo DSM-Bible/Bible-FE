@@ -6,19 +6,16 @@ interface AddProps {
   remind: number;
 }
 
-interface EditProps {
+export interface EditProps {
   title?: string;
-  start_time: string;
+  startTime: string;
   remind: number;
 }
 
 export interface ListData {
-  data: {
-    id: string;
-    title: string;
-    start_time: string;
-    remine: number;
-  };
+  title: string;
+  startTime: string;
+  remind: number;
 }
 
 export interface ScheduleItem {
@@ -40,12 +37,12 @@ export const GetAllSchedules = async (date: string) => {
   return await instance.get<ScheduleListResponse>(`/calender/list/${date}`);
 };
 
-export const GetList = async (cal_id: number) => {
-  return await instance.get<ListData>(`/calender/details/$${cal_id}`);
+export const GetList = async (cal_id: string) => {
+  return await instance.get<ListData>(`/calender/detail/${cal_id}`);
 };
 
-export const EditSchedule = async (cal_id: number, data: EditProps) => {
-  return await instance.patch(`/calender/details/${cal_id}`, data);
+export const EditSchedule = async (cal_id: string, data: EditProps) => {
+  return await instance.patch(`/calender/${cal_id}`, data);
 };
 
 export const DeleteSchedule = async (calId: string) => {

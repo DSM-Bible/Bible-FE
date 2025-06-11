@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import DefaultProfileImg from "../Assets/img/SVG/DefaultProfileImg.svg";
 import { UserInfo, UserUpdate } from "../Apis/account";
 import { useNavigate } from "react-router-dom";
+import { Cookie } from "../Utils/cookie";
 
 const Social = [
   { title: "친구 추가", root: "/AddFriend" },
@@ -16,7 +17,7 @@ const Social = [
 const setting = [
   { title: "자주 묻는 질문" },
   { title: "버그 제보" },
-  { title: "고객센터" },
+  { title: "로그아웃" },
 ];
 
 export const MyPage = () => {
@@ -98,6 +99,11 @@ export const MyPage = () => {
     await UserUpdate(formData);
   };
 
+  const handleLogout = () => {
+    Cookie.remove("token");
+    navigate("/");
+  };
+
   return (
     <div css={Container}>
       <div css={Profile}>
@@ -162,6 +168,7 @@ export const MyPage = () => {
               text={element.title}
               kind="bodyTItle"
               color="defaultBlack"
+              onClick={element.title === "로그아웃" ? handleLogout : undefined}
             />
           ))}
         </div>
