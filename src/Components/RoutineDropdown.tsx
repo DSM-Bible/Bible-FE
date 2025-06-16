@@ -7,9 +7,14 @@ export const RoutineDateSelector = ({
 }: {
   onChange: (date: string) => void;
 }) => {
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
+  const today = new Date();
+  const initialYear = String(today.getFullYear());
+  const initialMonth = String(today.getMonth() + 1);
+  const initialDay = String(today.getDate());
+
+  const [year, setYear] = useState(initialYear);
+  const [month, setMonth] = useState(initialMonth);
+  const [day, setDay] = useState(initialDay);
 
   const years = Array.from({ length: 10 }, (_, i) => 2024 + i);
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
