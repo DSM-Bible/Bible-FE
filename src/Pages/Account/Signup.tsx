@@ -12,15 +12,45 @@ export const Signup = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
-  const [nickname, ] = useState("");
+  const [nickname] = useState("");
+
+  const [passwordError, setPasswordError] = useState("");
+  const [checkPasswordError, setCheckPasswordError] = useState("");
+
+  const validatePassword = (pwd: string) => {
+    const isValidLength = /^.{8,15}$/.test(pwd);
+    const hasLetters = /[A-Za-z]/.test(pwd);
+    const hasNumbers = /[0-9]/.test(pwd);
+    const hasSpecials = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
+    return isValidLength && hasLetters && hasNumbers && hasSpecials;
+  };
 
   const ProfileSignup = () => {
+    let isValid = true;
+
+    if (!validatePassword(password)) {
+      setPasswordError("비밀번호는 8~15자이며, 영문자, 숫자, 특수문자를 포함해야 합니다.");
+      isValid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    if (password !== checkPassword) {
+      setCheckPasswordError("비밀번호가 일치하지 않습니다.");
+      isValid = false;
+    } else {
+      setCheckPasswordError("");
+    }
+
+    if (!isValid) return;
+
     navigate("/Profile/Signup", { state: { id, password, nickname } });
   };
 
   const MoveToLogin = () => {
-    navigate('/')
-  }
+    navigate('/');
+  };
+
   return (
     <>
       <div css={Container}>
@@ -29,11 +59,7 @@ export const Signup = () => {
           <div css={TitleBox}>
             <div css={RowTitle}>
               <Font text="갓생로그" kind="headLine1" color={"mainColor"} />
-              <Font
-                text="는 처음이시군요!"
-                kind="headLine1"
-                color={"defaultBlack"}
-              />
+              <Font text="는 처음이시군요!" kind="headLine1" color={"defaultBlack"} />
             </div>
             <Font text="지금 바로 시작해봅시다!" kind="headLine1" />
             <Font
@@ -55,12 +81,14 @@ export const Signup = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {passwordError && <div css={ErrorText}>{passwordError}</div>}
             <Input
               type="password"
-              placeholder="비밀번호를 입력해주세요"
+              placeholder="비밀번호를 다시 입력해주세요"
               value={checkPassword}
               onChange={(e) => setCheckPassword(e.target.value)}
             />
+            {checkPasswordError && <div css={ErrorText}>{checkPasswordError}</div>}
           </div>
         </div>
         <div css={BtnBox}>
@@ -76,6 +104,12 @@ export const Signup = () => {
     </>
   );
 };
+
+const ErrorText = css`
+  color: red;
+  font-size: 13px;
+  margin-top: 5px;
+`;
 
 const Container = css`
   display: flex;
