@@ -2,7 +2,6 @@ import { css } from "@emotion/react";
 import { Button } from "../../Components/Button";
 import { Header } from "../../Components/Header";
 import { RoutineInput } from "../../Components/RoutineInput";
-import { RoutineTime } from "../../Components/RoutineTime";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
@@ -11,6 +10,8 @@ import {
   GetList,
   ListData,
 } from "../../Apis/calendar";
+import { Font } from "../../Styles/Font";
+import { Color } from "../../Styles/Color";
 
 export const ScheduleEdit = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,7 +28,7 @@ export const ScheduleEdit = () => {
         const data: ListData = response.data;
 
         setTitle(data.title);
-        setStartTime(data.startTime.slice(11, 16));
+        setStartTime(data.startTime.replace(" ", "T"));
         setRemind(data.remind);
         console.log(startTime);
       } catch (err) {
@@ -39,14 +40,12 @@ export const ScheduleEdit = () => {
 
   const handleEdit = async () => {
     if (!id) return;
-    const today = new Date();
-    const formattedDate = formatDate(today);
-    const fullStartTime = `${formattedDate}T${startTime}`;
+    const fullStartTime = startTime.replace("T", " ");
 
     const data: EditProps = {
       title,
       startTime: fullStartTime,
-      remind,
+      remind: parseInt(remind),
     };
 
     try {
@@ -56,14 +55,6 @@ export const ScheduleEdit = () => {
       console.error("일정 수정에 실패했습니다", err);
     }
   };
-
-  const formatDate = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-
   return (
     <div css={Container}>
       <Header FontText="일정 수정" />
@@ -75,11 +66,15 @@ export const ScheduleEdit = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          <RoutineTime
-            label="시작 시간"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-          />
+          <div>
+            <Font text="시작 시간" kind="bodyText1" color={"defaultBlack"} />
+            <input
+              css={StartTime}
+              type="datetime-local"
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+            />
+          </div>
           <RoutineInput
             label="알림 시간(분)"
             value={remind}
@@ -114,4 +109,19 @@ const InputBox = css`
   display: flex;
   flex-direction: column;
   gap: 25px;
+`;
+
+const StartTime = css`
+  font-size: 15px;
+  font-weight: 500;
+  width: 320px;
+  height: 50px;
+  border: 1px solid ${Color.disableGray};
+  border-radius: 15px;
+  outline: none;
+  padding: 0 10px;
+
+  &::placeholder {
+    color: black;
+  }
 `;
