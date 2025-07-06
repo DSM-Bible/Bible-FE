@@ -113,8 +113,9 @@ export const BoardView = () => {
   return (
     <>
       <div css={Container}>
+      <Header FontText="게시글 상세" />
         <div css={ContentWrapper}>
-          <Header FontText="게시글 상세" />
+          
           <div css={ProfileBox}>
             <div css={ProfileBoxLeft}>
               <img src={Profile} alt="" />
@@ -165,10 +166,13 @@ const Container = css`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  width: 350px;
+  width: 100%;
+  max-width: 400px;
   min-height: 100vh;
   background-color: white;
   border-radius: 12px;
+  padding: 0 20px;
+  box-sizing: border-box;
 `;
 
 const ContentWrapper = css`

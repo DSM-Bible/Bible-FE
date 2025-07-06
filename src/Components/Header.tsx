@@ -19,6 +19,7 @@ const Container = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 100vw;
   height: 70px;
+  background-color: white;
 `;
