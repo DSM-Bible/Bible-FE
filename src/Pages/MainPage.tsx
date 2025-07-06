@@ -81,7 +81,7 @@ export const MainPage = () => {
         />
       </div>
       <Font text="오늘의 루틴" kind="bodyTItle" color="basicTextColor" />
-      <TodayRoutine routine={data?.data?.[1]} />
+      <TodayRoutine routine={data?.data?.[0]} />
     </div>
   );
 };
