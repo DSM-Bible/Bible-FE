@@ -17,39 +17,52 @@ import {
   PatchBoardEdit,
   PostBoardLike,
 } from "../../Apis/board";
+import { UserInfo, UserInfoResponse } from "../../Apis/account";
 
 export const BoardView = () => {
   const { id } = useParams<{ id: string }>();
   const [board, setBoard] = useState<BoardViewResponse>();
   const [showModal, setShowModal] = useState(false);
+  const [currentUser, setCurrentUser] = useState<UserInfoResponse | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!id) return;
 
-    GetBoardView(id)
-      .then((res) => {
-        const data = res.data.data;
-        setBoard(data);
-      })
-      .catch((err) => {
+    // 게시글 정보와 현재 사용자 정보를 동시에 가져오기
+    const fetchData = async () => {
+      try {
+        const [boardResponse, userResponse] = await Promise.all([
+          GetBoardView(id),
+          UserInfo()
+        ]);
+        
+        setBoard(boardResponse.data);
+        setCurrentUser(userResponse.data);
+      } catch (err) {
         console.error(err);
-      });
+      }
+    };
+
+    fetchData();
   }, [id]);
+
+  // 현재 사용자가 게시글 작성자인지 확인
+  const isAuthor = currentUser && board && currentUser.userId === board.data.userId;
 
   const handleLike = async () => {
     if (!id || !board) return;
 
     const prevBoard = { ...board };
 
-    const isLikedNow = !board.isLiked;
+    const isLikedNow = !board.data.isLiked;
 
     setBoard({
       ...board,
       data: {
         ...board.data,
-        isLiked: !board.isLiked,
-        likeCount: board.likeCount + (board.isLiked ? -1 : 1),
+        isLiked: !board.data.isLiked,
+        likeCount: board.data.likeCount + (board.data.isLiked ? -1 : 1),
       },
     });
 
@@ -61,7 +74,7 @@ export const BoardView = () => {
       }
 
       const res = await GetBoardView(id);
-      setBoard(res.data.data);
+      setBoard(res.data);
     } catch (err) {
       console.error(err);
       setBoard(prevBoard);
@@ -69,7 +82,10 @@ export const BoardView = () => {
   };
 
   const handleDetailClick = () => {
-    setShowModal(true);
+    // 작성자인 경우에만 모달 표시
+    if (isAuthor) {
+      setShowModal(true);
+    }
   };
 
   const closeModal = () => {
@@ -78,7 +94,7 @@ export const BoardView = () => {
 
   const handleEdit = () => {
     if(!id) return;
-    navigate(`/board/edit/${board?.id}`);
+    navigate(`/board/edit/${board?.data.id}`);
     setShowModal(false);
   };
 
@@ -103,23 +119,26 @@ export const BoardView = () => {
             <div css={ProfileBoxLeft}>
               <img src={Profile} alt="" />
               <div>
-                <p>{board?.userName}</p>
+                <p>{board?.data.userName}</p>
               </div>
             </div>
-            <button css={DetailBtn} onClick={handleDetailClick}>
-              <img src={ViewDetail} alt="" />
-            </button>
+            {/* 작성자인 경우에만 상세 버튼 표시 */}
+            {isAuthor && (
+              <button css={DetailBtn} onClick={handleDetailClick}>
+                <img src={ViewDetail} alt="" />
+              </button>
+            )}
           </div>
           <Font
-            text={board?.title ?? "제목 없음"}
+            text={board?.data.title ?? "제목 없음"}
             kind="bodyTItle"
             color={"defaultBlack"}
           />
-          {board?.fileUrl && <img src={board.fileUrl} />}
-          <p css={ContentText}>{board?.content}</p>
+          {board?.data.fileUrl && <img src={board.data.fileUrl} />}
+          <p css={ContentText}>{board?.data.content}</p>
           <div css={LikeBtn} onClick={handleLike}>
-            <img src={board?.isLiked ? FilledLike : DefaultLike} alt="" />
-            <p>{board?.likeCount ?? 0}</p>
+            <img src={board?.data.isLiked ? FilledLike : DefaultLike} alt="" />
+            <p>{board?.data.likeCount ?? 0}</p>
           </div>
         </div>
       </div>
